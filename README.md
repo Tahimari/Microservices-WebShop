@@ -11,7 +11,7 @@ docker-compose exec users python manage.py recreate_db
 docker-compose exec users python manage.py seed_db
 ```
 
-## To run app:
+## To run app
 ```
 docker-compose up -d --build
 ```
