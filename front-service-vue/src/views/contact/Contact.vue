@@ -5,6 +5,3 @@
 		phone: +48 123456789 <br/>
     </div>
 </template>
-
-<script>
-</script>
