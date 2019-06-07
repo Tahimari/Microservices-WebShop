@@ -24,7 +24,7 @@ RUN chmod 755 /usr/src/app/entrypoint.sh
 COPY . /usr/src/app
 
 # Make port available to the world outside this container
-EXPOSE 5001
+EXPOSE 5000
 
 # new
 # run server
