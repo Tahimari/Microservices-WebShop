@@ -2,24 +2,37 @@
     <div class="add container">
         <Alert v-if="alert" v-bind:message="alert"/>
         <h1 class="page-header">Register</h1>
-        <form v-on:submit="addUser">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" value="" name="email" id="inputEmail" class="form-control" placeholder="Email address"
-                   required autofocus>
-            <label for="inputFirstName" class="sr-only">First name</label>
-            <input type="text" value="" name="firstName" id="inputFirstName" class="form-control"
-                   placeholder="First name" required autofocus>
-            <label for="inputLastName" class="sr-only">Last name</label>
-            <input type="text" value="" name="lastName" id="inputLastName" class="form-control"
-                   placeholder="Last name" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="text" value="" name="password" id="inputPassword" class="form-control"
-                   placeholder="Password" required autofocus>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        
+        <b-form @submit="onSubmit" class="w-100">
+			<!-- Email -->
+			<b-form-group id="form-email-group" label="Email:" label-for="form-email-input">
+				<b-form-input id="form-email-input" type="email" v-model="addUserForm.email" required autofocus placeholder="Enter email">
+				</b-form-input>
+			</b-form-group>
+			
+			<!-- First Name -->
+			<b-form-group id="form-first-name-group" label="First Name:" label-for="form-first-name-input">
+				<b-form-input id="form-first-name-input" type="text" v-model="addUserForm.first_name" required placeholder="Enter first name">
+				</b-form-input>
+			</b-form-group>
+			
+            <!-- Last Name -->
+			<b-form-group id="form-last-name-group" label="Last Name:" label-for="form-last-name-input">
+				<b-form-input id="form-last-name-input" type="text" v-model="addUserForm.last_name" required placeholder="Enter last name">
+				</b-form-input>
+			</b-form-group>
+
+            <!-- Password -->
+			<b-form-group id="form-password-group" label="Password:" label-for="form-password-input">
+				<b-form-input id="form-password-input" type="password" v-model="addUserForm.password" required placeholder="Enter password">
+				</b-form-input>
+			</b-form-group>
+
+            <!-- Submit button -->
+			<b-button type="submit" variant="primary">Submit</b-button>
+        </b-form>
     </div>
 </template>
-
 
 <script>
     import Alert from '../../components/Alert'
@@ -28,34 +41,43 @@
         name: 'add',
         data() {
             return {
-                customer: {},
-                alert: ''
-            }
+                addUserForm: {
+					email: '',
+					first_name: '',
+					last_name: '',
+					password: '',
+				},
+                alert: '',
+            };
         },
         methods: {
-            addCustomer(e) {
-                if (!this.customer.first_name || !this.customer.last_name || !this.customer.email) {
-                    this.alert = 'Please fill in all required fields';
-                } else {
-                    let newCustomer = {
-                        first_name: this.customer.first_name,
-                        last_name: this.customer.last_name,
-                        phone: this.customer.phone,
-                        email: this.customer.email,
-                        address: this.customer.address,
-                        city: this.customer.city,
-                        state: this.customer.state
-                    }
-
-                    this.$http.post('http://slimapp/api/customer/add', newCustomer)
-                        .then(function (response) {
-                            this.$router.push({path: '/', query: {alert: 'Customer Added'}});
-                        });
-
-                    e.preventDefault();
-                }
-                e.preventDefault();
-            }
+            onSubmit(evt) {
+                evt.preventDefault();
+                const payload = {
+                    email: this.addUserForm.email,
+                    first_name: this.addUserForm.first_name,
+                    last_name: this.addUserForm.last_name,
+                    password: this.addUserForm.password,
+                };
+                this.addUser(payload);
+                this.initForm();
+            },
+            addUser(payload) {
+                const path = 'http://localhost:5001/users';
+                this.$http.post(path, payload)
+                .then(() => {
+                    this.alert = 'Customer added!';
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            initForm() {
+                this.addUserForm.email = '';
+                this.addUserForm.first_name = '';
+                this.addUserForm.last_name = '';
+                this.addUserForm.password = '';
+            },
         },
         components: {
             Alert
