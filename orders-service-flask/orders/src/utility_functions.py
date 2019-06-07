@@ -73,6 +73,10 @@ def validateTokenData(decodedToken):
 	return validationResult
 
 def decodeAndValidateToken(requestJson):
+	if requestJson is None:
+		resultValues = createErrorResult('Cannot find JSON object in request body!', 400)
+		return resultValues
+	
 	if 'token' not in requestJson.keys():
 		resultValues = createErrorResult('Authorization token not found!', 403)
 		return resultValues

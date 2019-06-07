@@ -18,7 +18,7 @@ services:
     volumes:
       - './users-service-flask/users:/usr/src/app'
     ports:
-      - 5001:5001
+      - 5001:5000
     environment:
       - FLASK_ENV=development
       - APP_SETTINGS=project.config.DevelopmentConfig 
@@ -34,7 +34,7 @@ services:
     volumes:
       - './orders-service-flask/orders:/app'
     ports:
-      - 5002:5002
+      - 5002:80
 
   client:
     build:
