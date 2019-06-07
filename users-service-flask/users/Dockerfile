@@ -23,6 +23,9 @@ RUN chmod 755 /usr/src/app/entrypoint.sh
 # add apx
 COPY . /usr/src/app
 
+# Make port available to the world outside this container
+EXPOSE 5001
+
 # new
 # run server
 CMD python manage.py run -h 0.0.0.0

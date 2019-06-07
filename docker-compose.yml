@@ -34,7 +34,7 @@ services:
     volumes:
       - './orders-service-flask/orders:/app'
     ports:
-      - 5002:5002
+      - 5002:80
 
   client:
     build:

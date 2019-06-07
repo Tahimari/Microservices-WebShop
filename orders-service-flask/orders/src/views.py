@@ -209,13 +209,6 @@ def change_product_quantity(order_id, product_id):
 
 @views_blueprint.route('/orders/status_codes', methods=['GET'])
 def get_all_possible_status_codes():
-	tokenValidationResult = decodeAndValidateToken(request.json)
-	decodedToken = tokenValidationResult[0]
-	if decodedToken is None:
-		responseDict = tokenValidationResult[1]
-		responseCode = tokenValidationResult[2]
-		return jsonify(responseDict), responseCode
-	
 	statusCodes = OrderStatus.query.all()
 	statusCodesSchema = OrderStatusSchema(many=True, strict=True)
 	
