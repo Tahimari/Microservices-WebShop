@@ -1,12 +1,29 @@
-from flask import Flask, jsonify
-from src.config import APP_DEBUG_MODE, APP_HOST_ADDRESS, APP_RUNNING_PORT
+from flask import Flask
+import os
+from src.views import *
+from src.config import *
+from src.models import db
+from src.utility_functions import doesDatabaseExist, prepare_database
 
 # Init app
 app = Flask(__name__)
 
-@app.route('/ping', methods=['GET'])
-def hello():
-	return jsonify({"response" : "ping ping pong!"})
+# Config database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + DATABASE_FILE_PATH
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Init database
+db.init_app(app)
+app.app_context().push()
+
+# Register views
+app.register_blueprint(views_blueprint)
+	
+def run_app(debug_mode):
+	if not doesDatabaseExist(DATABASE_FILE_PATH):
+		prepare_database()
+
+	app.run(debug=debug_mode, host=APP_HOST_ADDRESS, port=APP_RUNNING_PORT)
 
 if __name__ == '__main__':
-	app.run(debug=APP_DEBUG_MODE, host=APP_HOST_ADDRESS, port=APP_RUNNING_PORT)
+	run_app(debug_mode=APP_DEBUG_MODE)
