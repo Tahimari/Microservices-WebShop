@@ -3,7 +3,6 @@ from marshmallow import Schema, fields
 class CategoriesSchema(Schema):
 	class Meta:
 		fields = ('id', 'name')
-		exclude = ('products', )
 
 class ProductResourcesSchema(Schema):
 	class Meta:
