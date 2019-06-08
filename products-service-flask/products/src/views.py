@@ -27,3 +27,14 @@ def add_product_category():
 	except IntegrityError as e:
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
+
+@views_blueprint.route('/products/categories', methods=['GET'])
+def get_all_categories():
+	categories = Categories.query.all()
+	categoriesSchema = CategoriesSchema(many=True, strict=True)
+	
+	responseData = {}
+	responseData['status'] = 'success'
+	responseData['data'] = categoriesSchema.dump(categories).data
+	
+	return jsonify(responseData), 200
