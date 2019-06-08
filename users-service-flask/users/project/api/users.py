@@ -88,21 +88,22 @@ api.add_resource(Users, '/users/<user_id>')
 class LoginAPI(Resource):
     def post(self):
         post_data = request.get_json()
+        print(post_data)
         try:
             user = User.query.filter_by(
                 email=post_data.get('email')
               ).first()
             print(user)
-            auth_token = user.encode_auth_token(user.id)
-            if auth_token:
-                responseObject = {
-                    'status': 'success',
-                    'data': {
-                        'message': 'Successfully logged in.',
-                        'auth_token': auth_token.decode()
-                    }
+            #auth_token = user.encode_auth_token(user.id)
+            #if auth_token:
+            responseObject = {
+                'status': 'success',
+                'data': {
+                    'message': 'Successfully logged in.',
+                    #'auth_token': auth_token.decode()
                 }
-                return responseObject, 200
+            }
+            return responseObject, 200
         except Exception as e:
             print(e)
             responseObject = {

@@ -28,5 +28,6 @@ EXPOSE 5000
 
 # new
 # run server
+#CMD ["python","-u","manage.py"]
 CMD python manage.py run -h 0.0.0.0
 #CMD ["/usr/src/app/entrypoint.sh"]
