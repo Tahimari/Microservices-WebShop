@@ -152,7 +152,7 @@ def get_all_products_in_category(category_id):
 	return jsonify(responseData), 200
 
 @views_blueprint.route('/products/<int:category_id>/<int:product_id>', methods=['DELETE'])
-def delete_product(category_id, product_id):
+def remove_product(category_id, product_id):
 	product = Products.query.get(product_id)
 	if product is None:
 		return jsonify({'status' : 'fail', 'message' : "Product doesn't exist!"}), 404
@@ -164,6 +164,29 @@ def delete_product(category_id, product_id):
 		db.session.delete(product)
 		db.session.commit()
 		return jsonify({'status' : 'success', 'message' : 'Product deleted!'}), 200
+	except IntegrityError as e:
+		errorInfo = e.orig.args
+		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
+
+@views_blueprint.route('/products/<int:category_id>', methods=['DELETE'])
+def remove_all_products_from_category(category_id):
+	category = Categories.query.get(category_id)
+	
+	if category is None:
+		return jsonify({'status' : 'fail', 'message' : "Category doesn't exist!"}), 404
+	
+	products = Products.query.filter_by(category_id=category.id).all()
+	
+	if products is None:
+		message = 'Nothing to do, no product to delete in that category!'
+		return jsonify({'status' : 'success', 'message' : message }), 200
+	
+	try:
+		for product in products:
+			db.session.delete(product)
+		
+		db.session.commit()
+		return jsonify({'status' : 'success', 'message' : 'Products deleted!'}), 200
 	except IntegrityError as e:
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
