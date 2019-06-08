@@ -150,3 +150,20 @@ def get_all_products_in_category(category_id):
 	responseData['data'] = productList
 	
 	return jsonify(responseData), 200
+
+@views_blueprint.route('/products/<int:category_id>/<int:product_id>', methods=['DELETE'])
+def delete_product(category_id, product_id):
+	product = Products.query.get(product_id)
+	if product is None:
+		return jsonify({'status' : 'fail', 'message' : "Product doesn't exist!"}), 404
+		
+	if category_id != product.category_id:
+		return jsonify({'status' : 'fail', 'message' : "Product doesn't belong to category with id: %s" % category_id}), 400
+
+	try:
+		db.session.delete(product)
+		db.session.commit()
+		return jsonify({'status' : 'success', 'message' : 'Product deleted!'}), 200
+	except IntegrityError as e:
+		errorInfo = e.orig.args
+		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
