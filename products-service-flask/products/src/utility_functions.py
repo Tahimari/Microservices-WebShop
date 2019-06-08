@@ -10,12 +10,19 @@ def prepare_database():
 	if not os.path.exists(DATABASE_DIR_PATH):
 		os.mkdir(DATABASE_DIR_PATH)
 	
+	# Create schema
 	db.create_all()
+	# Categories
 	db.session.add(Categories('Shoes'))
 	db.session.add(Categories('T-Shirts'))
 	db.session.add(Categories('Jackets'))
 	db.session.add(Categories('Trousers'))
 	db.session.add(Categories('Shirts'))
+	# Products (TODO)
+	
+	# Product resources (TODO)
+	
+	# Commit changes
 	db.session.commit()
 
 def makeProductDict(product):

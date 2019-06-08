@@ -4,6 +4,7 @@ from src.views import *
 from src.config import *
 from src.models import db
 from src.utility_functions import doesDatabaseExist, prepare_database
+from src.db_foreign_key import *
 
 # Init app
 app = Flask(__name__)

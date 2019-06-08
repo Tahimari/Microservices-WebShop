@@ -19,7 +19,7 @@ class Products(db.Model):
 	name = db.Column(db.String(128), nullable=False)
 	price = db.Column(db.Float, nullable=False)
 	
-	category = db.relationship('Categories', backref=db.backref('products', passive_deletes=True))
+	category = db.relationship('Categories', backref=db.backref('product', passive_deletes=True))
 	product_resources = db.relationship('ProductResources', backref='product', passive_deletes=True)
 	
 	def __init__(self, category_id, name, price):
