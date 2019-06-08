@@ -2,6 +2,7 @@ import os
 from src.models import *
 from src.schemas import *
 from src.config import DATABASE_DIR_PATH
+from src.data_population import populate_database
 
 def doesDatabaseExist(pathToDatabase):
 	return os.path.isfile(pathToDatabase)
@@ -12,16 +13,10 @@ def prepare_database():
 	
 	# Create schema
 	db.create_all()
-	# Categories
-	db.session.add(Categories('Shoes'))
-	db.session.add(Categories('T-Shirts'))
-	db.session.add(Categories('Jackets'))
-	db.session.add(Categories('Trousers'))
-	db.session.add(Categories('Shirts'))
-	# Products (TODO)
 	
-	# Product resources (TODO)
-	
+	# Fill database with data
+	populate_database()
+
 	# Commit changes
 	db.session.commit()
 
