@@ -1,4 +1,5 @@
 from sqlalchemy.sql import func
+import datetime
 from project import db
 
 class User(db.Model):
@@ -11,11 +12,13 @@ class User(db.Model):
     last_name = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
-    def __init__(self, email, first_name, last_name, password):
+    def __init__(self, email, first_name, last_name, password, admin=False):
         self.email = email,
         self.first_name = first_name,
         self.last_name = last_name,
         self.password = password
+        self.registered_on = datetime.datetime.now()
+        self.admin = admin
 
     def to_json(self):
         return {
