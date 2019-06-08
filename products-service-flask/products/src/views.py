@@ -151,6 +151,42 @@ def get_all_products_in_category(category_id):
 	
 	return jsonify(responseData), 200
 
+@views_blueprint.route('/products/<int:category_id>/<int:product_id>', methods=['PUT'])
+def change_product_data(category_id, product_id):
+	product = Products.query.get(product_id)
+	if product is None:
+		return jsonify({'status' : 'fail', 'message' : "Product doesn't exist!"}), 404
+		
+	if category_id != product.category_id:
+		return jsonify({'status' : 'fail', 'message' : "Product doesn't belong to category with id: %s" % category_id}), 400
+
+	requestJSON = request.json
+	
+	if requestJSON is None:
+		errorMessage = 'Cannot find JSON object in request body!'
+		return jsonify({'status' : 'fail', 'message' : errorMessage}), 400
+	
+	jsonKeys = ['name', 'price', 'picture_file_url', 'product_description']
+	
+	for key in jsonKeys:
+		if key not in requestJSON.keys():
+			errorMessage = 'Invalid JSON object in request body!'
+			return jsonify({'status' : 'fail', 'message' : errorMessage}), 400
+
+	try:
+		product.name = requestJSON['name']
+		product.price = requestJSON['price']
+		
+		productResources = ProductResources.query.filter_by(product_id=product.id).first()
+		productResources.picture_file_url = requestJSON['picture_file_url']
+		productResources.product_description = requestJSON['product_description']
+		
+		db.session.commit()
+		return jsonify({'status' : 'success', 'message' : 'Product data changed!'}), 200
+	except IntegrityError as e:
+		errorInfo = e.orig.args
+		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
+
 @views_blueprint.route('/products/<int:category_id>/<int:product_id>', methods=['DELETE'])
 def remove_product(category_id, product_id):
 	product = Products.query.get(product_id)
