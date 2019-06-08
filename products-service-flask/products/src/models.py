@@ -8,7 +8,7 @@ class Categories(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	name = db.Column(db.String(128), nullable=False, unique=True)
 	
-	products = db.relationship('Products', backref='category', lazy='joined')
+	products = db.relationship('Products', backref='category', lazy=True)
 	
 	def __init__(self, name):
 		self.name = name
