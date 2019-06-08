@@ -65,3 +65,20 @@ def change_category_name(category_id):
 	except IntegrityError as e:
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
+
+@views_blueprint.route('/products/categories/<category_id>', methods=['DELETE'])
+def remove_category(category_id):
+	if not category_id.isdigit():
+		return jsonify({'status' : 'fail', 'message' : "'category_id' must be int!"})
+	
+	categoryToDelete = Categories.query.get(category_id)
+	if categoryToDelete is None:
+		return jsonify({'status' : 'fail', 'message' : "Category doesn't exist!"}), 404
+	
+	try:
+		db.session.delete(categoryToDelete)
+		db.session.commit()
+		return jsonify({'status' : 'success', 'message' : 'Category deleted!'}), 200
+	except IntegrityError as e:
+		errorInfo = e.orig.args
+		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
