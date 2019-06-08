@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
 from sqlalchemy.exc import IntegrityError
-from src.schemas import CategoriesSchema
+from src.schemas import *
 from src.models import *
+from src.utility_functions import makeProductDict
 
 views_blueprint = Blueprint('views', __name__)
 
@@ -39,11 +40,8 @@ def get_all_categories():
 	
 	return jsonify(responseData), 200
 
-@views_blueprint.route('/products/categories/<category_id>', methods=['PUT'])
+@views_blueprint.route('/products/categories/<int:category_id>', methods=['PUT'])
 def change_category_name(category_id):
-	if not category_id.isdigit():
-		return jsonify({'status' : 'fail', 'message' : "'category_id' must be int!"}), 400
-	
 	requestJSON = request.json
 	
 	if requestJSON is None:
@@ -66,11 +64,8 @@ def change_category_name(category_id):
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
 
-@views_blueprint.route('/products/categories/<category_id>', methods=['DELETE'])
+@views_blueprint.route('/products/categories/<int:category_id>', methods=['DELETE'])
 def remove_category(category_id):
-	if not category_id.isdigit():
-		return jsonify({'status' : 'fail', 'message' : "'category_id' must be int!"}), 400
-	
 	categoryToDelete = Categories.query.get(category_id)
 	if categoryToDelete is None:
 		return jsonify({'status' : 'fail', 'message' : "Category doesn't exist!"}), 404
@@ -83,11 +78,8 @@ def remove_category(category_id):
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
 
-@views_blueprint.route('/products/<category_id>', methods=['POST'])
+@views_blueprint.route('/products/<int:category_id>', methods=['POST'])
 def add_new_product(category_id):
-	if not category_id.isdigit():
-		return jsonify({'status' : 'fail', 'message' : "'category_id' must be int!"}), 400
-	
 	category = Categories.query.get(category_id)
 	if category is None:
 		return jsonify({'status' : 'fail', 'message' : "Category doesn't exist!"}), 400
@@ -124,3 +116,17 @@ def add_new_product(category_id):
 	except IntegrityError as e:
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
+
+@views_blueprint.route('/products/<int:category_id>/<int:product_id>', methods=['GET'])
+def get_product(category_id, product_id):
+	product = Products.query.get(product_id)
+	if product is None:
+		return jsonify({'status' : 'fail', 'message' : "Product doesn't exist!"}), 404
+	
+	if category_id != product.category_id:
+		return jsonify({'status' : 'fail', 'message' : "Product doesn't belong to category with id: %s" % category_id}), 400
+	
+	productDict = makeProductDict(product)
+	
+	responseData = { 'status' : 'success', 'data' : productDict }
+	return jsonify(responseData), 200

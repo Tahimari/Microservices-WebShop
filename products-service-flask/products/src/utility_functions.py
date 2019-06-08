@@ -1,5 +1,6 @@
 import os
 from src.models import *
+from src.schemas import *
 from src.config import DATABASE_DIR_PATH
 
 def doesDatabaseExist(pathToDatabase):
@@ -16,3 +17,20 @@ def prepare_database():
 	db.session.add(Categories('Trousers'))
 	db.session.add(Categories('Shirts'))
 	db.session.commit()
+
+def makeProductDict(product):
+	productDict = {}
+	
+	productDict['id'] = product.id
+	productDict['name'] = product.name
+	productDict['price'] = product.price
+	
+	category = Categories.query.get(product.category_id)
+	categorySchema = CategoriesSchema(strict=True)
+	productDict['category'] = categorySchema.dump(category).data
+	
+	productResources = ProductResources.query.filter_by(product_id=product.id).first()
+	resourcesSchema = ProductResourcesSchema(strict=True)
+	productDict['resources'] = resourcesSchema.dump(productResources).data
+	
+	return productDict

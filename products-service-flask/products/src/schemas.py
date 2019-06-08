@@ -6,11 +6,5 @@ class CategoriesSchema(Schema):
 
 class ProductResourcesSchema(Schema):
 	class Meta:
-		fields = ('pictureFileUrl', 'productDescription')
-		exclude = ('id', 'product_id')
-
-class ProductsSchema(Schema):
-	id = fields.Integer()
-	name = fields.String()
-	price = fields.Float()
-	resources = fields.Nested(ProductResourcesSchema)
+		fields = ('picture_file_url', 'product_description')
+		exclude = ('id', 'product_id', 'product')

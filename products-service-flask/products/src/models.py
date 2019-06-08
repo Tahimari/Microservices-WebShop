@@ -20,6 +20,7 @@ class Products(db.Model):
 	price = db.Column(db.Float, nullable=False)
 	
 	category = db.relationship('Categories', backref=db.backref('products', passive_deletes=True))
+	product_resources = db.relationship('ProductResources', backref='product', passive_deletes=True)
 	
 	def __init__(self, category_id, name, price):
 		self.category_id = category_id
@@ -33,8 +34,6 @@ class ProductResources(db.Model):
 	product_id = db.Column(db.Integer, db.ForeignKey('products.id', ondelete='CASCADE'), nullable=False)
 	picture_file_url = db.Column(db.String(2048), nullable=False)
 	product_description = db.Column(db.Text, nullable=True)
-	
-	product = db.relationship('Products', backref=db.backref('productResources', passive_deletes=True))
 	
 	def __init__(self, product_id, pictureFileUrl, productDescription):
 		self.product_id = product_id
