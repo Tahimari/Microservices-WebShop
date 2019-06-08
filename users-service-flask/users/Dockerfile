@@ -1,7 +1,6 @@
 # base image
 FROM python:3.7.2-alpine
 
-# new
 # install dependencies
 RUN apk update && \
     apk add --virtual build-deps gcc python-dev musl-dev && \
@@ -26,8 +25,5 @@ COPY . /usr/src/app
 # Make port available to the world outside this container
 EXPOSE 5000
 
-# new
 # run server
-#CMD ["python","-u","manage.py"]
-CMD python manage.py run -h 0.0.0.0
-#CMD ["/usr/src/app/entrypoint.sh"]
+CMD python -u manage.py run -h 0.0.0.0
