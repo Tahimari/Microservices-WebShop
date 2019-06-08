@@ -38,5 +38,5 @@ class ProductResources(db.Model):
 	
 	def __init__(self, product_id, pictureFileUrl, productDescription):
 		self.product_id = product_id
-		self.pictureFileUrl = pictureFileUrl
-		self.productDescription = productDescription
+		self.picture_file_url = pictureFileUrl
+		self.product_description = productDescription
