@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9afeb9d5-0a36-4fca-95e4-557f45050bcc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/front-service-vue/src/views/security/Login.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="44" column="52" selection-start-line="44" selection-start-column="52" selection-end-line="44" selection-end-column="52" />
+            <state relative-caret-position="473">
+              <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -79,66 +77,34 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
+              <item name="Microservices-WebShop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Microservices-WebShop" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
+              <item name="Microservices-WebShop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Microservices-WebShop" type="462c0819:PsiDirectoryNode" />
               <item name="front-service-vue" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
-              <item name="front-service-vue" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
+              <item name="Microservices-WebShop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Microservices-WebShop" type="462c0819:PsiDirectoryNode" />
               <item name="front-service-vue" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
+              <item name="Microservices-WebShop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Microservices-WebShop" type="462c0819:PsiDirectoryNode" />
               <item name="front-service-vue" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
-              <item name="front-service-vue" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
-              <item name="front-service-vue" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="items" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
-              <item name="front-service-vue" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="registration" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="webShop-micro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="webShop-micro" type="462c0819:PsiDirectoryNode" />
+              <item name="Microservices-WebShop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Microservices-WebShop" type="462c0819:PsiDirectoryNode" />
               <item name="front-service-vue" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
@@ -148,6 +114,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -193,11 +160,13 @@
       <workItem from="1559578120130" duration="276000" />
       <workItem from="1559636388176" duration="4905000" />
       <workItem from="1559920838108" duration="1625000" />
+      <workItem from="1560007691434" duration="46000" />
+      <workItem from="1560011401850" duration="907000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17447000" />
+    <option name="totallyTimeSpent" value="18400000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="845" extended-state="0" />
@@ -322,17 +291,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/front-service-vue/src/views/security/Login.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/front-service-vue/src/views/registration/Register.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="37" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-service-vue/src/views/security/Login.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="44" column="52" selection-start-line="44" selection-start-column="52" selection-end-line="44" selection-end-column="52" />
         </state>
       </provider>
     </entry>

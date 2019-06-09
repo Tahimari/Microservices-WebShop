@@ -113,46 +113,46 @@ class LoginAPI(Resource):
             return responseObject, 500
 api.add_resource(LoginAPI, '/users/login')
 
-# class LogoutAPI(Resource):
-#     def post(self):
-#         auth_header = request.headers.get('Authorization')
-#         if auth_header:
-#             auth_token = auth_header.split(" ")[1]
-#         else:
-#             auth_token = ''
-#         if auth_token:
-#             resp = User.decode_auth_token(auth_token)
-#             if not isinstance(resp, str):
-#                 return False
-#                 # blacklist_token = BlacklistToken(token=auth_token)
-#                 # try:
-#                 #     insert the token
-#                 #     db.session.add(blacklist_token)
-#                 #     db.session.commit()
-#                 #     responseObject = {
-#                 #         'status': 'success',
-#                 #         'message': 'Successfully logged out.'
-#                 #     }
-#                 #     return responseObject, 200
-#                 # except Exception as e:
-#                 #     responseObject = {
-#                 #         'status': 'fail',
-#                 #         'message': e
-#                 #     }
-#                 #     return responseObject, 200
-#             else:
-#                 responseObject = {
-#                     'status': 'fail',
-#                     'message': resp
-#                 }
-#                 return responseObject, 401
-#         else:
-#             responseObject = {
-#                 'status': 'fail',
-#                 'message': 'Provide a valid auth token.'
-#             }
-#             return responseObject, 403
-# api.add_resource(LogoutAPI, '/users/logout')
+class LogoutAPI(Resource):
+    def post(self):
+        auth_header = request.headers.get('Authorization')
+        if auth_header:
+            auth_token = auth_header.split(" ")[1]
+        else:
+            auth_token = ''
+        if auth_token:
+            resp = User.decode_auth_token(auth_token)
+            if not isinstance(resp, str):
+                return False
+                # blacklist_token = BlacklistToken(token=auth_token)
+                # try:
+                #     insert the token
+                #     db.session.add(blacklist_token)
+                #     db.session.commit()
+                #     responseObject = {
+                #         'status': 'success',
+                #         'message': 'Successfully logged out.'
+                #     }
+                #     return responseObject, 200
+                # except Exception as e:
+                #     responseObject = {
+                #         'status': 'fail',
+                #         'message': e
+                #     }
+                #     return responseObject, 200
+            else:
+                responseObject = {
+                    'status': 'fail',
+                    'message': resp
+                }
+                return responseObject, 401
+        else:
+            responseObject = {
+                'status': 'fail',
+                'message': 'Provide a valid auth token.'
+            }
+            return responseObject, 403
+api.add_resource(LogoutAPI, '/users/logout')
 
 @users_blueprint.route('/', methods=['GET', 'POST'])
 def index():

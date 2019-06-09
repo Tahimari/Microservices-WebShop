@@ -39,12 +39,12 @@
                         email: this.pass.email,
                         password: this.pass.password,
                     }
-                    console.log(newPass);
-                    const LOGIN_URL = `${process.env.VUE_APP_USERS_SERVICE_URL}/login`;
-                    // this.$http.post(LOGIN_URL, newPass)
-                    //     .then(function (response) {
-                    //         this.$router.push({path: '/', query: {alert: 'Login'}});
-                    //     });
+                    const LOGIN_URL = `${process.env.VUE_APP_USERS_SERVICE_URL}/users/login`;
+                    this.$http.post(LOGIN_URL, newPass)
+                        .then(function (response) {
+                            console.log(response)
+                            this.$router.push({path: '/', query: {alert: 'Login'}});
+                        });
                     e.preventDefault();
                 }
                 e.preventDefault();
