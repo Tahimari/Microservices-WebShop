@@ -2,7 +2,7 @@ import os
 from src.models import *
 from src.schemas import *
 from src.config import DATABASE_DIR_PATH
-from src.data_population import populate_database
+from src.seed import seed_db
 
 def doesDatabaseExist(pathToDatabase):
 	return os.path.isfile(pathToDatabase)
@@ -15,7 +15,7 @@ def prepare_database():
 	db.create_all()
 	
 	# Fill database with data
-	populate_database()
+	seed_db()
 
 	# Commit changes
 	db.session.commit()
