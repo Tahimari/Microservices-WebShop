@@ -1,2 +1,5 @@
 *__pycache__
 users-service-flask/users/htmlcov/
+.DS_Store
+.idea
+
