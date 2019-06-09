@@ -27,6 +27,15 @@ services:
     depends_on:
       - users-db
 
+  products:
+    build:
+      context: ./products-service-flask/products
+      dockerfile: Dockerfile
+    volumes:
+      - './products-service-flask/products:/app'
+    ports:
+      - 5002:80
+  
   orders:
     build:
       context: ./orders-service-flask/orders
@@ -34,7 +43,7 @@ services:
     volumes:
       - './orders-service-flask/orders:/app'
     ports:
-      - 5002:80
+      - 5003:80
 
   client:
     build:
