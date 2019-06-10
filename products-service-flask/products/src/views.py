@@ -131,6 +131,21 @@ def get_product(category_id, product_id):
 	responseData = { 'status' : 'success', 'data' : productDict }
 	return jsonify(responseData), 200
 
+@views_blueprint.route('/products', methods=['GET'])
+def get_all_products():
+	products = Products.query.all()
+	productList = []
+	
+	for product in products:
+		tempDict = makeProductDict(product)
+		productList.append(tempDict)
+	
+	responseData = {}
+	responseData['status'] = 'success'
+	responseData['data'] = productList
+	
+	return jsonify(responseData), 200
+
 @views_blueprint.route('/products/<int:category_id>', methods=['GET'])
 def get_all_products_in_category(category_id):
 	category = Categories.query.get(category_id)
