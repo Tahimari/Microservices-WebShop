@@ -1,2 +1,4 @@
 *__pycache__
 users-service-flask/users/htmlcov/
+.idea/workspace.xml
+users-service-flask/users/.idea/workspace.xml
