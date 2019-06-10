@@ -18,6 +18,11 @@ export default new Router({
       component: Home
     },
     {
+      path: "/category/:name",
+      name: "category",
+      component: Home
+    },
+    {
       path: "/show/id",
       name: "show",
       component: Show
@@ -46,6 +51,6 @@ export default new Router({
       path: "/account",
       name: "account",
       component: Account
-    },
+    }
   ]
 });
