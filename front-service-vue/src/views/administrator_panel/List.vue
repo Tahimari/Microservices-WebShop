@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <a href="{{}}" class="btn btn-primary pull-right">
             Create <span class="fa fa-plus-circle"></span>
         </a>
