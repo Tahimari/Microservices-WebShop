@@ -55,8 +55,11 @@ services:
       - './front-service-vue:/app'
     environment:
       - VUE_APP_USERS_SERVICE_URL=http://localhost:5001
+      - VUE_APP_PRODUCTS_SERVICE_URL=http://localhost:5002
+      - VUE_APP_ORDERS_SERVICE_URL=http://localhost:5003
     command: /bin/sh -c "npm run serve"
     depends_on:
       - users
       - users-db
+      - products
       - orders
