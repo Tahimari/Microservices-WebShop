@@ -38,35 +38,41 @@ export default {
 	},
 	watch:{
 		$route (to, from){
-			let category_id = this.$route.params.id;
-			if(!isNaN(category_id)){
-				this.getProducts(category_id);
-			} else {
-				this.products = [];
-			}
+			this.loadProducts();
 		}
 	}, 
 	methods: {
-		getProducts(categoryID) {
+		getAllProducts() {
+			const path = 'http://localhost:5002/products';
+			this.sendGetRequest(path);
+			this.category = ''
+		},
+		getProductsFromCategory(categoryID) {
 			const path = 'http://localhost:5002/products/' + String(categoryID);
+			this.sendGetRequest(path);
+			this.category = this.products[0].category.name
+		},
+		sendGetRequest(path) {
 			axios.get(path)
 			.then((res) => {
 				this.products = res.data.data;
-				this.category = this.products[0].category.name
 			})
 			.catch((error) => {
 				// eslint-disable-next-line
 				console.error(error);
 			});
+		},
+		loadProducts() {
+			let category_id = this.$route.params.id;
+			if(!isNaN(category_id)){
+				this.getProductsFromCategory(category_id);
+			} else {
+				this.getAllProducts();
+			}
 		}
 	},
 	created() {
-		let category_id = this.$route.params.id;
-		if(!isNaN(category_id)){
-			this.getProducts(category_id);
-		} else {
-			this.products = [];
-		}
+		this.loadProducts();
 	},
 }
 </script>
