@@ -1,4 +1,8 @@
 *__pycache__
 users-service-flask/users/htmlcov/
 .DS_Store
+<<<<<<< HEAD
 **/.idea
+=======
+.idea
+>>>>>>> 1515055a284107fc4a01465619a7be2949ab30d7
