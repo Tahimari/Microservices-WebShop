@@ -1,22 +1,23 @@
 <template>
     <div class="container">
-        <Alert v-if="alert" v-bind:message="alert"/>
-        <h1 class="page-header">Please sign in</h1>
-        <form v-on:submit="login" class="form-signin" method="post">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" value="" name="email" id="inputEmail" class="form-control"
-                   placeholder="Email address" required autofocus v-model="pass.email">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control"
-                   placeholder="Password" v-model="pass.password">
-<!--            <div class="checkbox mb-3">-->
-<!--                <label>-->
-<!--                    <input type="checkbox" name="_remember_me"> Remember me-->
-<!--                </label>-->
-<!--            </div>-->
-            <button type="submit" class="btn btn-primary">Log in!</button>
-         </form>
-        <router-link to="/register">Don't have account? Sign up!</router-link>
+        <b-jumbotron header="Please sign in">
+            <Alert v-if="alert" v-bind:message="alert"/>
+            <form v-on:submit="login" class="form-signin" method="post">
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" value="" name="email" id="inputEmail" class="form-control"
+                       placeholder="Email address" required autofocus v-model="pass.email">
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control"
+                       placeholder="Password" v-model="pass.password">
+    <!--            <div class="checkbox mb-3">-->
+    <!--                <label>-->
+    <!--                    <input type="checkbox" name="_remember_me"> Remember me-->
+    <!--                </label>-->
+    <!--            </div>-->
+                <button type="submit" class="btn btn-primary">Log in!</button>
+             </form>
+            <router-link to="/register">Don't have account? Sign up!</router-link>
+        </b-jumbotron>
     </div>
 </template>
 

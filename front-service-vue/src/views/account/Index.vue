@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Manage Your Account</h1>
         <h4>{{}}</h4>
         <h4>{{}}</h4>
