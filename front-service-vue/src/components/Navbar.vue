@@ -7,11 +7,11 @@
                 <b-navbar-nav>
                     <b-nav-item to="/">Home</b-nav-item>
                     <b-nav-item-dropdown text="Categories" right>
-                        <b-dropdown-item to="/category/Shoes">Shoes</b-dropdown-item>
-                        <b-dropdown-item to="/category/T-Shirts">T-Shirts</b-dropdown-item>
-                        <b-dropdown-item to="/category/Jackets">Jackets</b-dropdown-item>
-                        <b-dropdown-item to="/category/Trousers">Trousers</b-dropdown-item>
-                        <b-dropdown-item to="/category/Shirts">Shirts</b-dropdown-item>
+                        <b-dropdown-item to="/category/1">Shoes</b-dropdown-item>
+                        <b-dropdown-item to="/category/2">T-Shirts</b-dropdown-item>
+                        <b-dropdown-item to="/category/3">Jackets</b-dropdown-item>
+                        <b-dropdown-item to="/category/4">Trousers</b-dropdown-item>
+                        <b-dropdown-item to="/category/5">Shirts</b-dropdown-item>
                     </b-nav-item-dropdown>
                     <b-nav-item to="/contact">Contact us</b-nav-item>
                     <b-nav-item to="/panel">Panel</b-nav-item>

@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from sqlalchemy.exc import IntegrityError
 import os
 from src.views import *
@@ -15,6 +16,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init database
 db.init_app(app)
 app.app_context().push()
+
+# Enable CORS
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 # Register views
 app.register_blueprint(views_blueprint)
