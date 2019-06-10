@@ -1,4 +1,10 @@
 *__pycache__
 users-service-flask/users/htmlcov/
+<<<<<<< HEAD
 .idea/workspace.xml
 users-service-flask/users/.idea/workspace.xml
+=======
+.DS_Store
+.idea
+
+>>>>>>> 9c034386f12fdd0968d059b3e55c20d73fc24951
