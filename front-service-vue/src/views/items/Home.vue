@@ -11,7 +11,7 @@
 			<hr>
 			<div class="row">
 				<div class="col" v-for="product in products">
-					<a :href=" product.id ">
+					<a :href="`/show/${product.id}`">
 						<img :src="product.resources.picture_file_url" width="280">
 						<p>{{ product.name }}</p>
 					</a>
@@ -48,15 +48,15 @@ export default {
 			const path = 'http://localhost:5002/products';
 			this.sendGetRequest(path, false);
 		},
-		getProductsFromCategory(categoryID) {
-			const path = 'http://localhost:5002/products/' + String(categoryID);
+		getProductsFromCategory(categoryName) {
+			const path = 'http://localhost:5002/products/' + String(categoryName);
 			this.sendGetRequest(path, true);
 		},
-		sendGetRequest(path, setCategoryName) {
+		sendGetRequest(path, wasCategorySelected) {
 			axios.get(path)
 			.then((res) => {
 				this.products = res.data.data;
-				if (setCategoryName) {
+				if (wasCategorySelected) {
 					this.category = this.products[0].category.name;
 				} else {
 					this.category = '';
@@ -68,9 +68,9 @@ export default {
 			});
 		},
 		loadProducts() {
-			let category_id = this.$route.params.id;
-			if(!isNaN(category_id)){
-				this.getProductsFromCategory(category_id);
+			let categoryName = this.$route.params.name;
+			if(typeof categoryName !== 'undefined' && categoryName.length > 0) {
+				this.getProductsFromCategory(categoryName);
 			} else {
 				this.getAllProducts();
 			}

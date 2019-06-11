@@ -18,12 +18,12 @@ export default new Router({
       component: Home
     },
     {
-      path: "/category/:id",
+      path: "/category/:name",
       name: "category",
       component: Home
     },
     {
-      path: "/show/id",
+      path: "/show/:product_id",
       name: "show",
       component: Show
     },
