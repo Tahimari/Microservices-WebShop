@@ -34,8 +34,6 @@ export default {
 		return {
 			products: [],
 			category: '',
-			message: '',
-			showMessage: false,
 		}
 	},
 	watch:{
