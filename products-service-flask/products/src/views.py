@@ -117,14 +117,11 @@ def add_new_product(category_id):
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
 
-@views_blueprint.route('/products/<int:category_id>/<int:product_id>', methods=['GET'])
-def get_product(category_id, product_id):
+@views_blueprint.route('/products/<int:product_id>', methods=['GET'])
+def get_product(product_id):
 	product = Products.query.get(product_id)
 	if product is None:
 		return jsonify({'status' : 'fail', 'message' : "Product doesn't exist!"}), 404
-	
-	if category_id != product.category_id:
-		return jsonify({'status' : 'fail', 'message' : "Product doesn't belong to category with id: %s" % category_id}), 400
 	
 	productDict = makeProductDict(product)
 	
@@ -146,9 +143,9 @@ def get_all_products():
 	
 	return jsonify(responseData), 200
 
-@views_blueprint.route('/products/<int:category_id>', methods=['GET'])
-def get_all_products_in_category(category_id):
-	category = Categories.query.get(category_id)
+@views_blueprint.route('/products/<string:category_name>', methods=['GET'])
+def get_all_products_in_category(category_name):
+	category = Categories.query.filter_by(name=category_name).first()
 	
 	if category is None:
 		return jsonify({'status' : 'fail', 'message' : "Category doesn't exist!"}), 404
@@ -166,14 +163,11 @@ def get_all_products_in_category(category_id):
 	
 	return jsonify(responseData), 200
 
-@views_blueprint.route('/products/<int:category_id>/<int:product_id>', methods=['PUT'])
-def change_product_data(category_id, product_id):
+@views_blueprint.route('/products/<int:product_id>', methods=['PUT'])
+def change_product_data(product_id):
 	product = Products.query.get(product_id)
 	if product is None:
 		return jsonify({'status' : 'fail', 'message' : "Product doesn't exist!"}), 404
-		
-	if category_id != product.category_id:
-		return jsonify({'status' : 'fail', 'message' : "Product doesn't belong to category with id: %s" % category_id}), 400
 
 	requestJSON = request.json
 	
@@ -202,14 +196,11 @@ def change_product_data(category_id, product_id):
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
 
-@views_blueprint.route('/products/<int:category_id>/<int:product_id>', methods=['DELETE'])
-def remove_product(category_id, product_id):
+@views_blueprint.route('/products/<int:product_id>', methods=['DELETE'])
+def remove_product(product_id):
 	product = Products.query.get(product_id)
 	if product is None:
 		return jsonify({'status' : 'fail', 'message' : "Product doesn't exist!"}), 404
-		
-	if category_id != product.category_id:
-		return jsonify({'status' : 'fail', 'message' : "Product doesn't belong to category with id: %s" % category_id}), 400
 
 	try:
 		db.session.delete(product)
