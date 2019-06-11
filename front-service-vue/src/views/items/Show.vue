@@ -29,8 +29,8 @@
                 <p>{{ product.price }} zł</p>
                 <p>Product has been added to cart.</p>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info" href="/"> Back to shop</button>
-                    <button type="button" class="btn btn-primary pull-left" href="buy/details"> Go to check-in </button>
+                    <b-button variant="info" href="/"> Back to shop</b-button>
+                    <b-button variant="primary" href="buy/details"> Go to check-in </b-button>
                 </div>
             </b-modal> 
         </div>
