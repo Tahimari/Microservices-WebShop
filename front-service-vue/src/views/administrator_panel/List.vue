@@ -18,9 +18,9 @@
             </thead>
             <tbody>
                     <tr v-for="product in products">
-                        <td>{{ product.title }}</td>
-                        <td class="d-none d-md-table-cell">{{ product.description }}</td>
-                        <td>{{ product.category }}</td>
+                        <td>{{ product.name }}</td>
+                        <td class="d-none d-md-table-cell" style="white-space: pre-line">{{ product.resources.product_description }}</td>
+                        <td>{{ product.category.name }}</td>
                         <td>{{ product.price }}</td>
                         <td>
                             <a href="">
@@ -38,3 +38,31 @@
     </div>
 </template>
 
+<script>
+import axios from 'axios';
+
+export default {
+	name: 'products',
+	data() {
+		return {
+			products: [],
+		}
+	},
+	methods: {
+		getAllProducts() {
+			const path = 'http://localhost:5002/products';
+			axios.get(path)
+			.then((res) => {
+				this.products = res.data.data;
+			})
+			.catch((error) => {
+				// eslint-disable-next-line
+				console.error(error);
+			});
+		},
+	},
+	created() {
+		this.getAllProducts();
+    }
+}
+</script>
