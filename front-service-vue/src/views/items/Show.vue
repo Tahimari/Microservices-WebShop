@@ -4,7 +4,9 @@
     </div>
     <div v-else>
         <hr>
-        <p>{{ product.name }}</p>
+        <h1 class="display-4" align="center">
+            {{ product.name }}
+        </h1>
         <hr>
         <div class="row">
             <div class="col-md">
@@ -12,35 +14,22 @@
             </div>
             <div class="col-md">
                 <p>{{ product.name }}</p>
-                <p>{{ product.resources.product_description }}</p>
+                <p style="white-space: pre-line">{{ product.resources.product_description }}</p>
                 <p>{{ product.price }} zł</p>
-                <button href="/" class="btn btn-lg btn-primary btn-block"
-                        id="add-to-cart">Add to cart</button>
+                <button class="btn btn-lg btn-primary btn-block"
+                        id="add-to-cart" v-b-modal.add-product-modal>Add to cart</button>
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
+        <b-modal id="add-product-modal" title-tag="h2" title="Notifications" hide-footer>
                 <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <p> Notification </p>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-
-                        <img :src="product.resources.picture_file_url" width="200">
-                        <p>{{ product.name }}</p>
-                        <p>{{ product.price }} zł</p>
-                        <p>Product has been added to cart</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-lg btn-primary btn-bloc btn-close" data-dismiss="modal">Back to shop</button>
-                        <a href="/"><button class="btn btn-lg btn-primary btn-bloc">Go to check-in</button></a>
-                    </div>
-                </div>
-            </div>
-        </div> 
+            <img :src="product.resources.picture_file_url" width="200">
+            <p>{{ product.name }}</p>
+            <p>{{ product.price }} zł</p>
+            <p>Product has been added to cart</p>
+            <b-button variant="info" href="/"> Back to shop</b-button>
+            <b-button variant="primary" href="buy/details"> Go to check-in </b-button>
+        </b-modal> 
     </div>
  </template>
 
