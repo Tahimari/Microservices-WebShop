@@ -76,24 +76,5 @@ export default {
 		this.loadProduct();
 	},
 }
-
- 
- /*
- {
-            "category": {
-                "id": 1,
-                "name": "Shoes"
-            },
-            "id": 2,
-            "name": "Redblock Ventylator Athletic M49267",
-            "price": 99,
-            "resources": {
-                "picture_file_url": "https://b.allegroimg.com/s1440/03c560/8f70e73140cf8735769626b783ab",
-                "product_description": "\n\tObuwie dla każdej osoby, która chce poczuć się modnie i wygodnie.\n\tSeria Ventilator charakteryzuje się rewelacyjnym systemem wentylacji, dzięki czemu stopa pozostaje w świeżości przez długi okres czasu.\n\tCholewka została wykonana z elementów naturalnej skóry zamszowej oraz siatki, która dodatkowo poprawia wentylację.\n\t"
-            }
-        }
- */
-
-
  </script>
 
