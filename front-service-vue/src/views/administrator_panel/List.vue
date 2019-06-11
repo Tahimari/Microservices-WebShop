@@ -12,8 +12,8 @@
                     <th class="d-none d-md-table-cell">Description</th>
                     <th>Category</th>
                     <th>Price</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,18 +23,22 @@
                         <td>{{ product.category.name }}</td>
                         <td>{{ product.price }}</td>
                         <td>
-                            <a href="">
-                               <i class="far fa-edit"></i>
-                            </a>
+                            <b-button variant="warning" > Edit </b-button>
                         </td>
                         <td>
-                            <a href="" class="delete">
-                               <i class="fa fa-trash"></i>
-                            </a>
+                            <b-button variant="danger" v-b-modal.delete-product-dialog v-on:click="selectProduct(product)"> Delete </b-button>
                         </td>
                     </tr>
             </tbody>
         </table>
+        <b-modal id="delete-product-dialog" hide-footer>
+            <!-- Modal content -->
+            <p> Are sure do you want to delete "{{ productToDelete.name }}"? </p>
+            <div class="modal-footer">
+                <b-button variant="success" @click="hideModal">No</b-button>
+                <b-button variant="danger" @click="deleteProduct();hideModal();">Yes</b-button>
+            </div>
+        </b-modal> 
     </div>
 </template>
 
@@ -45,7 +49,8 @@ export default {
 	name: 'products',
 	data() {
 		return {
-			products: [],
+            products: [],
+            productToDelete: {},
 		}
 	},
 	methods: {
@@ -56,10 +61,27 @@ export default {
 				this.products = res.data.data;
 			})
 			.catch((error) => {
-				// eslint-disable-next-line
 				console.error(error);
 			});
-		},
+        },
+        selectProduct(product) {
+            this.productToDelete = product;
+        },
+        hideModal() {
+            this.$bvModal.hide("delete-product-dialog")
+        },
+        deleteProduct() {
+            let product_id = this.productToDelete.id;
+            const path = 'http://localhost:5002/products/' + String(product_id);
+            axios.delete(path)
+            .then((res) => {
+                this.products = this.products.filter(obj => obj.id !== product_id);
+                this.productToDelete = {};
+            })
+            .catch((error) => {
+				console.error(error);
+			});
+        }
 	},
 	created() {
 		this.getAllProducts();
