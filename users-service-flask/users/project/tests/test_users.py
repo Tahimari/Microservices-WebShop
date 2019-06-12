@@ -143,41 +143,32 @@ class TestUserService(BaseTestCase):
                 'fletcher@notreal.com', data['data']['users'][1]['email'])
             self.assertIn('success', data['status'])
 
-    def test_main_no_users(self):
-        """Ensure the main route behaves correctly when no users have been
-        added to the database."""
-        response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'All Users', response.data)
-        self.assertIn(b'<p>No users!</p>', response.data)
 
-    def test_main_with_users(self):
-        """Ensure the main route behaves correctly when users have been
-        added to the database."""
-        add_user('michael@mherman.org', 'michael', 'Herman', 'qwerty123456')
-        add_user('fletcher@notreal.com', 'fletcher', 'Herman', 'qwerty123456')
-        with self.client:
-            response = self.client.get('/')
-            self.assertEqual(response.status_code, 200)
-            self.assertIn(b'All Users', response.data)
-            self.assertNotIn(b'<p>No users!</p>', response.data)
-            self.assertIn(b'michael', response.data)
-            self.assertIn(b'fletcher', response.data)
+    def test_encode_auth_token(self):
+        user = User(
+            first_name='Michael',
+            last_name='Herman',
+            email='test@test.com',
+            password='test'
+        )
+        db.session.add(user)
+        db.session.commit()
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
 
-    def test_main_add_user(self):
-        """
-        Ensure a new user can be added to the database via a POST request.
-        """
-        with self.client:
-            response = self.client.post(
-                '/',
-                data=dict(email='michael@sonotreal.com', first_name='michael', last_name='Herman', password='qwerty123456'),
-                follow_redirects=True
-            )
-            self.assertEqual(response.status_code, 200)
-            self.assertIn(b'All Users', response.data)
-            self.assertNotIn(b'<p>No users!</p>', response.data)
-            self.assertIn(b'michael', response.data)
+    def test_decode_auth_token(self):
+        user = User(
+            first_name='Michael',
+            last_name='Herman',
+            email='test@test.com',
+            password='test'
+        )
+        db.session.add(user)
+        db.session.commit()
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+        self.assertTrue(User.decode_auth_token(
+            auth_token.decode("utf-8")) == 1)
 
 if __name__ == '__main__':
     unittest.main()
