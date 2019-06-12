@@ -122,11 +122,28 @@ export default {
 				console.error(error);
 			});
         },
-        editProduct() {
-            console.log("Product edited!")
+        editProduct(productID, requestJSON) {
+            const path = 'http://localhost:5002/products/' + String(productID);
+            axios.put(path, requestJSON)
+            .then(() => {
+			this.getAllProducts();
+			})
+			.catch((error) => {
+			console.error(error);
+			this.getAllProducts();
+			});
         },
         onSubmit(evt) {
-            alert("Product edited!");
+            evt.preventDefault();
+            this.hideModal("edit-product-dialog");
+            const productID = this.selectedProduct.id;
+            const requestJSON = {
+                name: this.selectedProduct.name,
+                price: this.selectedProduct.price,
+                picture_file_url: this.selectedProduct.picture_file_url,
+                product_description: this.selectedProduct.description,
+            };
+            this.editProduct(productID, requestJSON);
         },
 	},
 	created() {
