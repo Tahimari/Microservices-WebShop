@@ -249,13 +249,4 @@ export default {
 		this.getAllProducts();
     }
 }
-
-/*
-{
-    "name": "KURTKA MĘSKA T-01",
-    "price": 109.99,
-    "picture_file_url": "https://e.allegroimg.com/s1024/01777a/2c22bc874e4185ad344c0d8d4c0e",
-    "product_description": "\n\tNowa, oryginalnie zapakowana z kompletem metek.\n\tWykonana z wysokiej jakości matreriałów\n\tProsta kurtka z zapięciem na zamek błyskawiczny.\n\tPosiada dwie kieszenie boczne\n\tW środku wykończona jest materiałową podszewką.\n\tAbsolutny bestseller tego sezonu.\n\t"
-}
-*/
 </script>
