@@ -7,7 +7,7 @@ import Login from "./views/security/Login.vue";
 import Register from "./views/registration/Register.vue";
 import Panel from "./views/administrator_panel/List.vue";
 import Account from "./views/account/Index.vue";
-import Cart from "./views/buy_item/index.vue"
+import Cart from "./views/buy_item/Cart.vue"
 import Delivery from "./views/buy_item/Delivery.vue"
 
 Vue.use(Router);
@@ -61,7 +61,7 @@ export default new Router({
       component: Account
     },
     {
-      path: "buy/details",
+      path: "/cart",
       name: "cart",
       component: Cart
     }
