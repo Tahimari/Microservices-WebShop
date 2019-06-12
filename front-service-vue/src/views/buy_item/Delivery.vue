@@ -51,7 +51,11 @@
 				</b-form-group>
 
 				<!-- Submit button -->
-				<b-button type="submit" variant="primary"> Buy! </b-button>
+				<div class="modal-footer">
+					<b-button variant="danger" to="/"> Back to shop </b-button>
+					<b-button variant="info" to="/cart" text-white> Back to cart </b-button>
+					<b-button type="submit" variant="success"> Buy! </b-button>
+				</div>
         	</b-form>
 		</b-jumbotron>
     </div>
