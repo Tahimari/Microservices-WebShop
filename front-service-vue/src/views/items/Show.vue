@@ -30,7 +30,7 @@
                 <p>Product has been added to cart.</p>
                 <div class="modal-footer">
                     <b-button variant="info" href="/"> Back to shop</b-button>
-                    <b-button variant="primary" href="buy/details"> Go to check-in </b-button>
+                    <b-button variant="primary" href="/cart"> Go to check-in </b-button>
                 </div>
             </b-modal> 
         </div>
@@ -60,7 +60,6 @@ export default {
 				this.product = res.data.data;
 			})
 			.catch((error) => {
-				// eslint-disable-next-line
 				console.error(error);
 			});
         },
