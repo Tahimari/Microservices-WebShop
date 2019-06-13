@@ -43,8 +43,9 @@ class UsersList(Resource):
                 response_object['token'] = auth_token.decode()
                 return response_object, 201
             else:
+                response_object['status'] = 'fail'
                 response_object['message'] = 'Sorry. That email already exists.'
-                return response_object, 400
+                return response_object, 202
         except exc.IntegrityError:
             db.session.rollback()
             return response_object, 400
@@ -52,9 +53,7 @@ class UsersList(Resource):
     def get(self):
         response_object = {
             'status': 'success',
-            'data': {
-                'users': [user.to_json() for user in User.query.all()]
-            }
+            'users': [user.to_json() for user in User.query.all()]
         }
         return response_object, 200
 
@@ -98,29 +97,23 @@ class LoginAPI(Resource):
             if auth_token and post_data.get('password')==user.password:
                 responseObject = {
                     'status': 'success',
-                    'data': {
-                        'message': 'Successfully logged in.',
-                        'auth_token': auth_token.decode()
-                    }
+                    'message': 'Successfully logged in.',
+                    'token': auth_token.decode()
                 }
                 return responseObject, 200
             else:
                 responseObject = {
                     'status': 'fail',
-                    'data': {
-                        'message': 'Wrong credentials'
-                    }
+                    'message': 'Wrong credentials'
                 }
                 return responseObject, 401
         except Exception as e:
             print(e)
             responseObject = {
                 'status': 'fail',
-                'data': {
-                    'message': 'Try again'
-                }
+                'message': 'Try again'
             }
-            return responseObject, 500
+            return responseObject, 404
 
 
 class LogoutAPI(Resource):
@@ -167,15 +160,3 @@ api.add_resource(UsersList, '/users')
 api.add_resource(Users, '/users/<user_id>')
 api.add_resource(LoginAPI, '/users/login')
 api.add_resource(LogoutAPI, '/users/logout')
-
-# @users_blueprint.route('/', methods=['GET', 'POST'])
-# def index():
-#     if request.method == 'POST':
-#         email = request.form['email']
-#         first_name = request.form['first_name']
-#         last_name = request.form['last_name']
-#         password = request.form['password']
-#         db.session.add(User(email=email, first_name=first_name, last_name=last_name, password=password))
-#         db.session.commit()
-#     users = User.query.all()
-#     return render_template('index.html', users=users)
