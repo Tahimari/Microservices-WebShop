@@ -57,7 +57,7 @@
                 const USERS_URL = `${process.env.VUE_APP_USERS_SERVICE_URL}/users`;
                 this.$http.get(USERS_URL)
                     .then(function (response) {
-                        this.users = response.body['data']['users'];
+                        this.users = response.body['users'];
                     });
             }
         },

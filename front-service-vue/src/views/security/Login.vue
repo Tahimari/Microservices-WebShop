@@ -43,7 +43,7 @@
                     const LOGIN_URL = `${process.env.VUE_APP_USERS_SERVICE_URL}/users/login`;
                     this.$http.post(LOGIN_URL, newPass)
                         .then(function (response) {
-                            localStorage.setItem('token', response.body.data.auth_token);
+                            localStorage.setItem('token', response.body.token);
                             this.$router.push({path: '/', query: {alert: 'Login'}});
                         });
                     e.preventDefault();
