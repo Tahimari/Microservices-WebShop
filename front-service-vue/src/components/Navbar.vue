@@ -14,9 +14,10 @@
                         <b-dropdown-item to="/category/Shirts">Shirts</b-dropdown-item>
                     </b-nav-item-dropdown>
                     <b-nav-item to="/contact">Contact us</b-nav-item>
-                    <b-nav-item to="/panel">Panel</b-nav-item>
-                    <b-nav-item to="/account">My Account</b-nav-item>
-                    <b-nav-item to="/login">Log in</b-nav-item>
+                    <b-nav-item v-if="token" to="/panel">Panel</b-nav-item>
+                    <b-nav-item v-if="token" to="/account">My Account</b-nav-item>
+                    <b-nav-item v-if="!token" to="/login">Log in</b-nav-item>
+                    <b-nav-item v-if="token" v-on:click="logout" to="/logout">Log out</b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav class="ml-auto">
                     <b-nav-form>
@@ -32,5 +33,43 @@
 <script>
     export default {
         name: 'Navbar',
+        data: function() {
+            return {
+                token: ''
+            };
+        },
+        mounted() {
+            if (localStorage.token) {
+                this.token = localStorage.token;
+            }
+        },
+        watch:{
+            $route (){
+                if (localStorage.token) {
+                    this.token = localStorage.token;
+                } else {
+                    this.token = '';
+                }
+            }
+        },
+        methods: {
+            logout(e) {
+                e.preventDefault();
+                let data = {};
+                let headers = {
+                        Authorization: 'Bearer ' + this.token,
+                };
+                const LOGOUT_URL = `${process.env.VUE_APP_USERS_SERVICE_URL}/users/logout`;
+                this.$http.post(LOGOUT_URL, data, {headers: headers})
+                    .then(function () {
+                        localStorage.removeItem('token');
+                        this.$router.push({path: '/', query: {alert: 'Logout'}});
+                    }, response => {
+                        localStorage.removeItem('token');
+                        this.token = '';
+                        this.$router.push({path: '/', query: {alert: 'Logout'}});
+                });
+            }
+        }
     };
 </script>
