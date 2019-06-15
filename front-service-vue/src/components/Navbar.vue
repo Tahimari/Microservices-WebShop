@@ -20,6 +20,7 @@
                     <b-nav-item v-if="token" v-on:click="logout" to="/logout">Log out</b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav class="ml-auto">
+                     <b-nav-item v-if="token" to="/cart">Cart</b-nav-item>
                     <b-nav-form>
                         <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
                         <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>

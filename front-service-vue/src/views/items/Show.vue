@@ -16,9 +16,19 @@
                 <div class="col-md">
                     <p>{{ product.name }}</p>
                     <p style="white-space: pre-line">{{ product.resources.product_description }}</p>
-                    <p>{{ product.price }} zł</p>
-                    <button class="btn btn-lg btn-primary btn-block"
+                    <p>Cena: {{ product.price }} zł</p>
+                    <div v-if="token">
+                        <b-form-group id="form-quantity-group">
+                            Ile sztuk: {{ quantity }}
+                            <b-form-input id="form-quantity-input" type="range" step="1" min="1" max="20" v-model="quantity">		
+                            </b-form-input>
+                        </b-form-group>
+                        <button class="btn btn-lg btn-primary btn-block"
                             id="add-to-cart" v-on:click="addProductToCart" v-b-modal.add-product-modal>Add to cart</button>
+                    </div>
+                    <div v-if="!token">
+                         <b-alert variant="warning" show> Zaloguj się, aby dodać do koszyka! </b-alert>
+                    </div>
                 </div>
             </div>
             <!-- Modal -->
@@ -26,7 +36,8 @@
                     <!-- Modal content -->
                 <img :src="product.resources.picture_file_url" width="200">
                 <p>{{ product.name }}</p>
-                <p>{{ product.price }} zł</p>
+                <p>Cena: {{ product.price }} zł</p>
+                <p> Ile sztuk: {{ quantity }}</p>
                 <p>Product has been added to cart.</p>
                 <div class="modal-footer">
                     <b-button variant="info" href="/"> Back to shop</b-button>
@@ -44,12 +55,24 @@ export default {
 	name: 'show-product',
 	data() {
 		return {
-			product: {},
+            product: {},
+            quantity: 1,
+            token: ''
 		}
-	},
+    },
+    mounted() {
+        if (localStorage.token) {
+            this.token = localStorage.token;
+        }
+    },
 	watch:{
 		$route (to, from){
-			this.loadProduct();
+            this.loadProduct();
+            if (localStorage.token) {
+                this.token = localStorage.token;
+            } else {
+                this.token = '';
+            }
 		}
 	}, 
 	methods: {
@@ -68,7 +91,16 @@ export default {
             this.getProduct(productID);
         },
         addProductToCart() {
-            alert("TODO -> Dorobić funkcję dodawania produktów do koszyka! (potrzebne są tokeny)");
+            const path = 'http://localhost:5003/orders';
+            const payload = {
+                token: this.token,
+                product_id: this.product.id,
+                quantity: this.quantity
+            }
+            axios.post(path, payload)
+            .catch((error) => {
+				console.error(error);
+			});
         }
 	},
 	created() {
