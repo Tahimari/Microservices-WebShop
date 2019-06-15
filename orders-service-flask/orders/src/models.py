@@ -16,13 +16,12 @@ class OrderStatus(db.Model):
 class Orders(db.Model):
 	__tablename__ = 'orders'
 	
-	id = db.Column(db.Integer, primary_key=True)
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	customer_id = db.Column(db.Integer, nullable=False)
 	order_status_code = db.Column(db.Integer, db.ForeignKey('order_status_codes.id'), nullable=False)
 	order_items = db.relationship('OrderItems', backref='order', lazy='joined')
 	
-	def __init__(self, id, customer_id):
-		self.id = id
+	def __init__(self, customer_id):
 		self.customer_id = customer_id
 		self.order_status_code = 0
 

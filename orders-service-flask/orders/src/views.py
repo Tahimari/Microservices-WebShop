@@ -6,11 +6,8 @@ from src.utility_functions import *
 
 views_blueprint = Blueprint('views', __name__)
 
-@views_blueprint.route('/orders/<order_id>', methods=['POST'])
-def add_order_item(order_id):
-	if not order_id.isdigit():
-		return jsonify({'status' : 'fail', 'message' : 'Order ID must be integer!'}), 400
-	
+@views_blueprint.route('/orders', methods=['POST'])
+def add_order_item():
 	tokenValidationResult = decodeAndValidateToken(request.json)
 	decodedToken = tokenValidationResult[0]
 	if decodedToken is None:
@@ -19,22 +16,19 @@ def add_order_item(order_id):
 		return jsonify(responseDict), responseCode
 	
 	customer_id = decodedToken['customer_id']
-		
-	if not haveCustomerAccessToOrder(order_id, customer_id):
-		return jsonify({'status' : 'fail', 'message' : 'Access denied'}), 403
 	
-	order = Orders.query.get(order_id)
+	PENDING_STATUS_CODE = 0
+	order = Orders.query.filter_by(order_status_code=PENDING_STATUS_CODE, customer_id=customer_id).first()
+
 	if order is None:
-		new_order = Orders(order_id, customer_id)
+		new_order = Orders(customer_id)
 		db.session.add(new_order)
+		db.session.flush()
 		order = new_order
-	
-	if not isOrderInPendingStatus(order):
-		return jsonify({'status' : 'fail', 'message' : 'Cannot add new items - order is not in Pending status!'}), 403
 	
 	product_id = int(request.json['product_id'])
 	quantity = int(request.json['quantity'])
-	new_order_item = OrderItems(order_id, product_id, quantity)
+	new_order_item = OrderItems(order.id, product_id, quantity)
 	
 	try:
 		db.session.add(new_order_item)
