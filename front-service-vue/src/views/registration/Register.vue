@@ -60,13 +60,15 @@
                     password: this.addUserForm.password,
                 };
                 this.addUser(payload);
-                this.initForm();
             },
             addUser(payload) {
                 const path = 'http://localhost:5001/users';
                 this.$http.post(path, payload)
                 .then(() => {
                     this.alert = 'Customer added!';
+                    this.initForm();
+                    this.triggerLogin(payload.email, payload.password);
+                    this.$router.push({path: '/'});
                 })
                 .catch((error) => {
                     console.log(error);
@@ -78,6 +80,9 @@
                 this.addUserForm.last_name = '';
                 this.addUserForm.password = '';
             },
+            triggerLogin(email, password) {
+                this.$root.$emit('triggerLogin', email, password);
+            }
         },
         components: {
             Alert

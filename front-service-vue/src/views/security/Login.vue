@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    import Alert from '../../components/Alert';;
+    import Alert from '../../components/Alert';
 
     export default {
         data() {
@@ -34,6 +34,8 @@
         },
         methods: {
             login(e) {
+                let isEventNull = (typeof e === "undefined");
+                
                 if (!this.pass.email || !this.pass.password) {
                     this.alert = 'Please fill in all required fields';
                 } else {
@@ -47,10 +49,25 @@
                             localStorage.setItem('token', response.body.token);
                             this.$router.push({path: '/', query: {alert: 'Login'}});
                         });
+                    
+                    if (!isEventNull) {
+                        e.preventDefault();
+                    }
+                }
+                if (!isEventNull) {
                     e.preventDefault();
                 }
-                e.preventDefault();
+            },
+            loginAfterRegister(email, password) {
+                this.pass['email'] = email;
+                this.pass['password'] = password;
+                this.login();
             }
+        },
+        mounted() {
+            this.$root.$on('triggerLogin', (email, password) => {
+                this.loginAfterRegister(email, password);
+            });
         },
         components: {
             Alert
