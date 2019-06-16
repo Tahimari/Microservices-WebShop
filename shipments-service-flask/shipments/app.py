@@ -3,6 +3,7 @@ from flask_cors import CORS
 from src.models import *
 from src.config import *
 from src.utility_functions import doesDatabaseExist, prepare_database
+from src.views import *
 
 # Init app
 app = Flask(__name__)
@@ -17,6 +18,9 @@ app.app_context().push()
 
 # Enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
+
+# Register views
+app.register_blueprint(views_blueprint)
 
 def run_app(debug_mode):
 	if not doesDatabaseExist(DATABASE_FILE_PATH):
