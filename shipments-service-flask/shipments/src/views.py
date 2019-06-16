@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy.exc import IntegrityError
 from src.models import *
 from src.schemas import *
-from src.utility_functions import decodeAndValidateToken
+from src.utility_functions import decodeAndValidateToken, makeShipmentDict
 
 views_blueprint = Blueprint('views', __name__)
 
@@ -103,3 +103,53 @@ def add_new_shipment():
 	except IntegrityError as e:
 		errorInfo = e.orig.args
 		return jsonify({'status' : 'fail', 'message' : errorInfo[0]}), 409
+
+@views_blueprint.route('/shipments', methods=['GET'])
+def get_all_shipments():
+	tokenValidationResult = decodeAndValidateToken(request.args)
+	decodedToken = tokenValidationResult[0]
+	if decodedToken is None:
+		responseDict = tokenValidationResult[1]
+		responseCode = tokenValidationResult[2]
+		return jsonify(responseDict), responseCode
+	
+	customerID = decodedToken["customer_id"]
+	customerShipments = Shipments.query.filter_by(customer_id=customerID)
+	
+	responseData = {}
+	responseData['status'] = 'success'
+	
+	if customerShipments is None:
+		responseData['data'] = []
+	else:
+		shipmentList = []
+		for shipment in customerShipments:
+			shipmentDict = makeShipmentDict(shipment)
+			shipmentList.append(shipmentDict)
+		
+		responseData['data'] = shipmentList
+	
+	return jsonify(responseData), 200
+
+@views_blueprint.route('/shipments/<int:order_id>', methods=['GET'])
+def get_shipment_for_order(order_id):
+	tokenValidationResult = decodeAndValidateToken(request.args)
+	decodedToken = tokenValidationResult[0]
+	if decodedToken is None:
+		responseDict = tokenValidationResult[1]
+		responseCode = tokenValidationResult[2]
+		return jsonify(responseDict), responseCode
+	
+	customerID = decodedToken["customer_id"]
+	shipment = Shipments.query.filter_by(\
+			customer_id = customerID, \
+			order_id = order_id).first()
+	
+	if shipment is None:
+		return jsonify({'status': 'fail', 'message': "Shipment doesn't exist!"}), 404
+	
+	shipmentDict = makeShipmentDict(shipment)
+	responseData = {}
+	responseData['status'] = 'success'
+	responseData['data'] = shipmentDict
+	return jsonify(responseData), 200

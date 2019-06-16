@@ -3,6 +3,7 @@ from jwt.exceptions import InvalidSignatureError, DecodeError, ExpiredSignatureE
 import os
 from src.models import *
 from src.config import PUBLIC_KEY, TOKEN_ENCODING_ALGORITHM, DATABASE_DIR_PATH
+from src.schemas import *
 
 def doesDatabaseExist(pathToDatabase):
 	return os.path.isfile(pathToDatabase)
@@ -81,3 +82,33 @@ def decodeAndValidateToken(requestJson):
 		return resultValues
 
 	return [decodedToken, None, None]
+
+def makeShipmentDict(shipment):
+	shipmentDict = {}
+	
+	shipmentDict['customer_id'] = shipment.customer_id
+	shipmentDict['order_id'] = shipment.order_id
+	
+	shipmentState = ShipmentStates.query.get(shipment.shipment_state_id)
+	shipmentStateSchema = ShipmentStatesSchema(strict=True)
+	shipmentDict['shipment_state'] = shipmentStateSchema.dump(shipmentState).data
+	
+	shipmentType = ShipmentTypes.query.get(shipment.shipment_type_id)
+	shipmentTypeSchema = ShipmentTypesSchema(strict=True)
+	shipmentDict['shipment_type'] = shipmentTypeSchema.dump(shipmentType).data
+	
+	mailingDataDict = {}
+	mailingData = MailingData.query.get(shipment.mailing_data_id)
+	
+	personalData = PersonalData.query.get(mailingData.personal_data_id)
+	personalDataSchema = PersonalDataSchema(strict=True)
+	mailingDataDict['personal_data'] = personalDataSchema.dump(personalData).data
+	
+	addressData = AddressData.query.get(mailingData.address_data_id)
+	addressDataSchema = AddressDataSchema(strict=True)
+	mailingDataDict['address_data'] = addressDataSchema.dump(addressData).data
+	
+	shipmentDict['mailing_data'] = mailingDataDict
+	return shipmentDict
+
+
