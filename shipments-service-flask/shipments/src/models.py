@@ -40,7 +40,7 @@ class PersonalData(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	first_name = db.Column(db.String(128), nullable=False)
 	last_name = db.Column(db.String(128), nullable=False)
-	phone_number = db.Column(db.Integer, nullable=False)
+	phone_number = db.Column(db.String(9), nullable=False)
 	
 	def __init__(self, first_name, last_name, phone_number):
 		self.first_name = first_name
@@ -76,12 +76,15 @@ class MailingData(db.Model):
 	personal_data = db.relationship('PersonalData', backref='mailing_data', lazy='joined')
 	address_data = db.relationship('AddressData', backref='mailind_data', lazy='joined')
 	
-	def __init(self, personal_data_id, address_data_id):
+	def __init__(self, personal_data_id, address_data_id):
 		self.personal_data_id = personal_data_id
 		self.address_data_id = address_data_id
 
 class Shipments(db.Model):
 	__tablename__ = 'shipments'
+	__table_args__ = (
+        db.UniqueConstraint('customer_id', 'order_id', name = 'unique_shipment'),
+	)
 	
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	customer_id = db.Column(db.Integer, nullable=False)
@@ -99,4 +102,4 @@ class Shipments(db.Model):
 		self.order_id = order_id
 		self.shipment_type_id = shipment_type_id
 		self.shipment_state_id = 0
-		self.mailing_data_id = mailing_data
+		self.mailing_data_id = mailing_data_id
