@@ -22,11 +22,13 @@ class ShipmentTypes(db.Model):
 	name = db.Column(db.String(128), nullable=False, unique=True)
 	price = db.Column(db.Float, nullable=False)
 	shipping_time = db.Column(db.Integer, nullable=False)
+	description = db.Column(db.Text, nullable=True)
 	
-	def __init__(self, name, price, shipping_time):
+	def __init__(self, name, price, shipping_time, description=None):
 		self.name = name
 		self.price = price
 		self.shipping_time = shipping_time
+		self.description = description
 
 class PersonalData(db.Model):
 	__tablename__ = 'personal_data'
@@ -86,13 +88,13 @@ class Shipments(db.Model):
 	order_id = db.Column(db.Integer, nullable=False)
 	shipment_type_id = db.Column(db.Integer, db.ForeignKey('shipment_types.id'), nullable=False)
 	shipment_state_id = db.Column(db.Integer, db.ForeignKey('shipment_states.id'), nullable=False)
-	mailing_data_id = db.Column(db.Integer, db.ForeignKey('mailing_data.id'), nullable=False)
+	mailing_data_id = db.Column(db.Integer, db.ForeignKey('mailing_data.id'), nullable=True)
 	
 	shipment_type = db.relationship('ShipmentTypes', backref='shipments', lazy='joined')
 	shipment_state = db.relationship('ShipmentStates', backref='shipments', lazy='joined')
 	mailing_data = db.relationship('MailingData', backref='shipments', lazy='joined')
 	
-	def __init__(self, customer_id, order_id, shipment_type_id, mailing_data_id):
+	def __init__(self, customer_id, order_id, shipment_type_id, mailing_data_id=None):
 		self.customer_id = customer_id
 		self.order_id = order_id
 		self.shipment_type_id = shipment_type_id
