@@ -1,5 +1,5 @@
 from jwt import decode
-from jwt.exceptions import InvalidSignatureError, DecodeError
+from jwt.exceptions import InvalidSignatureError, DecodeError, ExpiredSignatureError
 import os
 from src.schemas import OrderStatusSchema, OrderItemsSchema, OrdersSchema
 from src.config import PUBLIC_KEY, TOKEN_ENCODING_ALGORITHM, DATABASE_DIR_PATH
@@ -54,7 +54,7 @@ def decodeToken(token, public_key, encodingAlgorithm):
 	try:
 		decodedToken = decode(token, public_key, algorithms=[encodingAlgorithm])
 		return decodedToken
-	except (DecodeError, InvalidSignatureError):
+	except (DecodeError, InvalidSignatureError, ExpiredSignatureError):
 		return None
 
 def validateTokenData(decodedToken):

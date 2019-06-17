@@ -45,6 +45,15 @@ services:
     ports:
       - 5003:80
 
+  shipments:
+    build:
+      context: ./shipments-service-flask/shipments
+      dockerfile: Dockerfile
+    volumes:
+      - './shipments-service-flask/shipments:/app'
+    ports:
+      - 5004:80
+
   client:
     build:
       context: ./front-service-vue
