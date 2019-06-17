@@ -98,9 +98,6 @@ export default {
 		getOrderedProducts() {
             this.total_price = 0.0;
             const path = 'http://localhost:5003/orders/pending';
-            const payload = {
-                token: this.token
-            };
             axios.get(path, {
                 params: {
                     token: this.token

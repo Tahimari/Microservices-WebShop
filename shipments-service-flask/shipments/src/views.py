@@ -182,6 +182,7 @@ def get_all_pending_shipments():
 		responseData['data'] = shipmentList
 	
 	return jsonify(responseData), 200
+
 	
 @views_blueprint.route('/shipments/<int:order_id>/state', methods=['PUT'])
 def change_shipment_state(order_id):
