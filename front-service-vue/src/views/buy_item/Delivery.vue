@@ -4,7 +4,7 @@
                 <h2 align="center" class="display-3"> Cannot send delivery request, your cart is empty! </h2>
 		</b-jumbotron>
 		<b-jumbotron header="Delivery" v-else>
-			<b-form class="w-100">
+			<b-form class="w-100" @submit="onSubmit">
 				<!-- Shipment Type -->
 				<b-form-group id="form-shipment-group" label="Shipment Type:" label-for="form-shipment-input">
 					<b-form-select id="form-shipment-input" v-model="addShipmentForm.shipmentTypeID" :options="shipmentTypeOptions">
@@ -23,15 +23,15 @@
 					</b-form-input>
 				</b-form-group>
 
-                <!-- Postal Line -->
-				<b-form-group id="form-postal-line-group" label="Postal Line:" label-for="form-postal-line-input">
-					<b-form-input id="form-postal-line-input" type="text" required v-model="addShipmentForm.postalLine" placeholder="Enter your address">
+                <!-- Address Line -->
+				<b-form-group id="form-address-line-group" label="Address Line:" label-for="form-address-line-input">
+					<b-form-input id="form-address-line-input" type="text" required v-model="addShipmentForm.addressLine" placeholder="Enter your address">
 					</b-form-input>
 				</b-form-group>
 
                 <!-- Postal Code -->
 				<b-form-group id="form-postal-code-group" label="Postal Code:" label-for="form-postal-code-input">
-					<b-form-input id="form-postal-code-input" type="text" pattern="[0-9]{2}\-[0-9]{3}" v-model="addShipmentForm.postalCode" required placeholder="Enter postal code">
+					<b-form-input id="form-postal-code-input" type="text" pattern="[0-9]{2}-[0-9]{3}" v-model="addShipmentForm.postalCode" required placeholder="Enter postal code">
 					</b-form-input>
 				</b-form-group>
 
@@ -77,13 +77,14 @@ export default {
 		return {
             token: '',
 			isCartEmpty: true,
+			order_id: 0,
 			shipmentTypes: [],
 			shipmentTypeOptions: [],
 			addShipmentForm: {
 				shipmentTypeID: 0,
 				firstName: '',
 				lastName: '',
-				postalLine: '',
+				addressLine: '',
 				postalCode: '',
 				city: '',
 				country: '',
@@ -108,6 +109,65 @@ export default {
 		}
 	}, 
 	methods: {
+		clearAddShipmentForm() {
+			this.addShipmentForm.shipmentTypeID = 0;
+			this.addShipmentForm.firstName = '';
+			this.addShipmentForm.lastName = '';
+			this.addShipmentForm.addressLine = '';
+			this.addShipmentForm.postalCode = '';
+			this.addShipmentForm.city = '';
+			this.addShipmentForm.country = '';
+			this.addShipmentForm.phoneNumber = '';
+		},
+		addNewShipment(payload) {
+			const path = 'http://localhost:5004/shipments';
+			axios.post(path, payload)
+			.then((res) => {
+				this.setOrderAsComplete();
+				this.clearAddShipmentForm();
+				this.$router.push({path: '/'});
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		},
+		setOrderAsComplete() {
+			const path = 'http://localhost:5003/orders/' + String(this.order_id);
+			const payload = {
+				token: this.token,
+				new_status_code: 1
+			}
+			axios.put(path, payload)
+			.then(() => {
+				this.order_id = 0;
+				this.isCartEmpty = true;
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		},
+		onSubmit(evt) {
+			evt.preventDefault();
+			const payload = {
+				token: this.token,
+				order_id: this.order_id,
+				shipment_type_id: this.addShipmentForm.shipmentTypeID,
+				mailing_data: {
+					personal_data: {
+						first_name: this.addShipmentForm.firstName,
+						last_name: this.addShipmentForm.lastName,
+						phone_number: this.addShipmentForm.phoneNumber
+					},
+					address_data : {
+						address_line: this.addShipmentForm.addressLine,
+						postal_code: this.addShipmentForm.postalCode,
+						city: this.addShipmentForm.city,
+						country: this.addShipmentForm.country
+					}
+				}
+			};
+			this.addNewShipment(payload);
+		},
 		setShipmentOptions(shipmentTypes) {
 			let defaultOption = { value: 0, text: 'Select shipment type', disabled: true};
 			this.shipmentTypeOptions.push(defaultOption);
@@ -123,7 +183,7 @@ export default {
 			}
 		},
 		getShipmentTypes() {
-			const path = 'http://localhost:5004/shipments/types'
+			const path = 'http://localhost:5004/shipments/types';
 			axios.get(path)
 			.then((res) => {
 				this.shipmentTypes = res.data.data;
@@ -146,12 +206,14 @@ export default {
 				})
 				.then((res) => {
 					this.isCartEmpty = false;
+					this.order_id = res.data.data.order_id;
 					this.getShipmentTypes();
 				})
 				.catch((error) => {
 					if (error.response) {
 						if (error.response.status === 404) {
 							this.isCartEmpty = true;
+							this.order_id = 0;
 							return;
 						}
 					}
