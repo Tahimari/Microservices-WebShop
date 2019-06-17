@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div v-else>
-			<p>No items to display</p>
+			<h2 align="center" class="display-3" style="margin-top: 25px;"> No items to display! </h2>
 		</div>
 	</div>
 </template>
@@ -33,7 +33,7 @@ export default {
 	data() {
 		return {
 			products: [],
-			category: '',
+			category: ''
 		}
 	},
 	watch:{
@@ -49,6 +49,29 @@ export default {
 		getProductsFromCategory(categoryName) {
 			const path = 'http://localhost:5002/products/' + String(categoryName);
 			this.sendGetRequest(path, true);
+		},
+		getProductsFilteredByQuery(queryString) {
+			queryString = queryString.toLowerCase();
+			const path = 'http://localhost:5002/products';
+			axios.get(path)
+			.then((res) => {
+				let tempInputProducts = res.data.data;
+				let tempOutputProducts = [];
+
+				for (var i = 0; i < tempInputProducts.length; i++) {
+					let product = tempInputProducts[i];
+					let productName = product.name.toLowerCase();
+					if (productName.includes(queryString)) {
+						tempOutputProducts.push(product);
+					}
+				}
+				this.products = tempOutputProducts;
+				this.category = '';
+			})
+			.catch((error) => {
+				// eslint-disable-next-line
+				console.error(error);
+			});
 		},
 		sendGetRequest(path, wasCategorySelected) {
 			axios.get(path)
@@ -69,6 +92,9 @@ export default {
 			let categoryName = this.$route.params.name;
 			if(typeof categoryName !== 'undefined' && categoryName.length > 0) {
 				this.getProductsFromCategory(categoryName);
+			} else if (this.$route.query.search) {
+				let queryString = this.$route.query.search;
+				this.getProductsFilteredByQuery(queryString);
 			} else {
 				this.getAllProducts();
 			}
