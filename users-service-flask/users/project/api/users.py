@@ -98,7 +98,8 @@ class LoginAPI(Resource):
                 responseObject = {
                     'status': 'success',
                     'message': 'Successfully logged in.',
-                    'token': auth_token.decode()
+                    'token': auth_token.decode(),
+                    'admin': user.admin
                 }
                 return responseObject, 200
             else:

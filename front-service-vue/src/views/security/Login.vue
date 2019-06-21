@@ -47,6 +47,7 @@
                     this.$http.post(LOGIN_URL, newPass)
                         .then(function (response) {
                             localStorage.setItem('token', response.body.token);
+                            localStorage.setItem('admin', response.body.admin);
                             this.$router.push({path: '/', query: {alert: 'Login'}});
                         }, response => {
                             this.alert = response.body.message;

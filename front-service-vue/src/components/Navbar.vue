@@ -14,7 +14,7 @@
                         <b-dropdown-item to="/category/Shirts">Shirts</b-dropdown-item>
                     </b-nav-item-dropdown>
                     <b-nav-item to="/contact">Contact us</b-nav-item>
-                    <b-nav-item v-if="token" to="/panel">Panel</b-nav-item>
+                    <b-nav-item v-if="token && admin === true" to="/panel">Panel</b-nav-item>
                     <b-nav-item v-if="token" to="/account">My Account</b-nav-item>
                     <b-nav-item v-if="!token" to="/login">Log in</b-nav-item>
                     <b-nav-item v-if="token" v-on:click="logout" to="/logout">Log out</b-nav-item>
@@ -38,12 +38,16 @@
         data: function() {
             return {
                 token: '',
+                admin: false,
                 searchString: ''
             };
         },
         mounted() {
             if (localStorage.token) {
                 this.token = localStorage.token;
+            }
+            if (localStorage.admin) {
+                this.admin = JSON.parse(localStorage.admin);
             }
         },
         watch:{
@@ -52,6 +56,11 @@
                     this.token = localStorage.token;
                 } else {
                     this.token = '';
+                }
+                if (localStorage.admin) {
+                    this.admin = JSON.parse(localStorage.admin);
+                } else {
+                    this.admin = false;
                 }
             }
         },
@@ -73,10 +82,13 @@
                 this.$http.post(LOGOUT_URL, data, {headers: headers})
                     .then(function () {
                         localStorage.removeItem('token');
+                        localStorage.removeItem('admin');
                         this.$router.push({path: '/', query: {alert: 'Logout'}});
                     }, response => {
                         localStorage.removeItem('token');
                         this.token = '';
+                        localStorage.removeItem('admin');
+                        this.admin = false;
                         this.$router.push({path: '/', query: {alert: 'Logout'}});
                 });
             }
