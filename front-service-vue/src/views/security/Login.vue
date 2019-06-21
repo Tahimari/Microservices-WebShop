@@ -48,8 +48,10 @@
                         .then(function (response) {
                             localStorage.setItem('token', response.body.token);
                             this.$router.push({path: '/', query: {alert: 'Login'}});
+                        }, response => {
+                            this.alert = response.body.message;
                         });
-                    
+
                     if (!isEventNull) {
                         e.preventDefault();
                     }
