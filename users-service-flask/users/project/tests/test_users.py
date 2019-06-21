@@ -78,7 +78,7 @@ class TestUserService(BaseTestCase):
         )
         db.session.add(user)
         db.session.commit()
-        auth_token = user.encode_auth_token(user.id)
+        auth_token = user.encode_auth_token(user.id, user.admin)
         self.assertTrue(isinstance(auth_token, bytes))
 
 
@@ -91,7 +91,7 @@ class TestUserService(BaseTestCase):
         )
         db.session.add(user)
         db.session.commit()
-        auth_token = user.encode_auth_token(user.id)
+        auth_token = user.encode_auth_token(user.id, user.admin)
         self.assertTrue(isinstance(auth_token, bytes))
         self.assertTrue(User.decode_auth_token(
             auth_token.decode("utf-8")) == 1)

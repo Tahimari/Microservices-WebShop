@@ -37,7 +37,7 @@ class UsersList(Resource):
                 user = User(email=email, first_name=first_name, last_name=last_name, password=password)
                 db.session.add(user)
                 db.session.commit()
-                auth_token = user.encode_auth_token(user.id)
+                auth_token = user.encode_auth_token(user.id, user.admin)
                 response_object['status'] = 'success'
                 response_object['message'] = f'{email} was added!'
                 response_object['token'] = auth_token.decode()
@@ -93,7 +93,7 @@ class LoginAPI(Resource):
             user = User.query.filter_by(
                 email=post_data.get('email')
               ).first()
-            auth_token = user.encode_auth_token(user.id)
+            auth_token = user.encode_auth_token(user.id, user.admin)
             if auth_token and post_data.get('password')==user.password:
                 responseObject = {
                     'status': 'success',

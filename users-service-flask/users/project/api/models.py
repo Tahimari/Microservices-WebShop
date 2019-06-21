@@ -3,8 +3,8 @@ import datetime
 import jwt
 from project import db
 
-class User(db.Model):
 
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -12,6 +12,8 @@ class User(db.Model):
     first_name = db.Column(db.String(128), nullable=False)
     last_name = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
+    registered_on = db.Column(db.DateTime, nullable=False)
+    admin = db.Column(db.Boolean, nullable=False, default=False)
 
     def __init__(self, email, first_name, last_name, password, admin=False):
         self.email = email,
@@ -27,15 +29,17 @@ class User(db.Model):
             'email': self.email,
             'first_name': self.first_name,
             'last_name': self.last_name,
-            'password': self.password
+            'password': self.password,
+            'admin': self.admin,
         }
 
-    def encode_auth_token(self, user_id):
+    def encode_auth_token(self, user_id, is_admin):
         try:
             payload = {
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30),
                 'iat': datetime.datetime.utcnow(),
-                'customer_id': user_id
+                'customer_id': user_id,
+                'is_admin': is_admin,
             }
             return jwt.encode(
                 payload,
@@ -53,11 +57,12 @@ class User(db.Model):
             if is_blacklisted_token:
                 return 'Token blacklisted. Please log in again.'
             else:
-                return payload['customer_id']
+                return [payload['customer_id'], payload['admin']]
         except jwt.ExpiredSignatureError:
             return 'Signature expired. Please log in again.'
         except jwt.InvalidTokenError:
             return 'Invalid token. Please log in again.'
+
 
 class BlacklistToken(db.Model):
     """
@@ -69,11 +74,9 @@ class BlacklistToken(db.Model):
     token = db.Column(db.String(500), unique=True, nullable=False)
     blacklisted_on = db.Column(db.DateTime, nullable=False)
 
-
     def __init__(self, token):
         self.token = token
         self.blacklisted_on = datetime.datetime.now()
-
 
     def __repr__(self):
         return '<id: token: {}'.format(self.token)
