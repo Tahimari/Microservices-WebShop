@@ -2,7 +2,7 @@
     <div class="container">
         <h1 style="margin-top: 20px;">
             All Products
-            <b-button variant="info" v-b-modal.add-product-dialog> Create New </b-button>
+            <b-button variant="info" v-b-modal.add-product-dialog class="float-right"> Create New </b-button>
         </h1> 
         <table class="table">
             <thead>
