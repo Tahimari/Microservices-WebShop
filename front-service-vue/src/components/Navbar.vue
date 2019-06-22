@@ -1,33 +1,38 @@
 <template>
     <div>
         <b-navbar toggleable="lg" type="dark" variant="primary">
-            <b-navbar-brand to="/">WebShop</b-navbar-brand>
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-            <b-collapse id="nav-collapse" is-nav>
-                <b-navbar-nav>
-                    <b-nav-item to="/">Home</b-nav-item>
-                    <b-nav-item-dropdown text="Categories" right>
-                        <b-dropdown-item to="/category/Shoes">Shoes</b-dropdown-item>
-                        <b-dropdown-item to="/category/T-Shirts">T-Shirts</b-dropdown-item>
-                        <b-dropdown-item to="/category/Jackets">Jackets</b-dropdown-item>
-                        <b-dropdown-item to="/category/Trousers">Trousers</b-dropdown-item>
-                        <b-dropdown-item to="/category/Shirts">Shirts</b-dropdown-item>
-                    </b-nav-item-dropdown>
-                    <b-nav-item to="/contact">Contact us</b-nav-item>
-                    <b-nav-item v-if="token && admin === true" to="/panel">Panel</b-nav-item>
-                    <b-nav-item v-if="token" to="/account">My Account</b-nav-item>
-                    <b-nav-item v-if="!token" to="/login">Log in</b-nav-item>
-                    <b-nav-item v-if="token" v-on:click="logout" to="/logout">Log out</b-nav-item>
-                </b-navbar-nav>
-                <b-navbar-nav class="ml-auto">
-                     <b-nav-item v-if="token" to="/cart">Cart</b-nav-item>
-                    <b-nav-form>
-                        <b-form-input size="sm" class="mr-sm-2" placeholder="Search" 
-                            v-on:keydown.enter.prevent="filterProductList()" v-model="searchString"></b-form-input>
-                        <b-button size="sm" class="my-2 my-sm-0" v-on:click="filterProductList()"> Search </b-button>
-                    </b-nav-form>
-                </b-navbar-nav>
-            </b-collapse>
+            <div class="container">
+                <b-navbar-brand to="/">WebShop</b-navbar-brand>
+                <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+                <b-collapse id="nav-collapse" is-nav>
+                    <b-navbar-nav>
+                        <b-nav-item to="/">Home</b-nav-item>
+                        <b-nav-item-dropdown text="Categories" right>
+                            <b-dropdown-item to="/category/Shoes">Shoes</b-dropdown-item>
+                            <b-dropdown-item to="/category/T-Shirts">T-Shirts</b-dropdown-item>
+                            <b-dropdown-item to="/category/Jackets">Jackets</b-dropdown-item>
+                            <b-dropdown-item to="/category/Trousers">Trousers</b-dropdown-item>
+                            <b-dropdown-item to="/category/Shirts">Shirts</b-dropdown-item>
+                        </b-nav-item-dropdown>
+                        <b-nav-item to="/contact">Contact us</b-nav-item>
+                        <b-nav-item v-if="token && admin === true" to="/panel">Panel</b-nav-item>
+                        <b-nav-item v-if="token" to="/account">My Account</b-nav-item>
+                        <b-nav-item v-if="!token" to="/login">Log in</b-nav-item>
+                        <b-nav-item v-if="token" v-on:click="logout" to="/logout">Log out</b-nav-item>
+                    </b-navbar-nav>
+                    <b-navbar-nav class="ml-auto">
+                        <b-nav-item v-if="token" to="/cart">
+                            <font-awesome-icon icon="shopping-cart" class="mr-3"/>
+                        </b-nav-item>
+                        <b-nav-form>
+                            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"
+                                          v-on:keydown.enter.prevent="filterProductList()"
+                                          v-model="searchString"></b-form-input>
+                            <b-button size="sm" class="my-2 my-sm-0" v-on:click="filterProductList()"> Search</b-button>
+                        </b-nav-form>
+                    </b-navbar-nav>
+                </b-collapse>
+            </div>
         </b-navbar>
     </div>
 </template>
