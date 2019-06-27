@@ -127,7 +127,6 @@
             handleSubmit(result) {
                 this.showCollapse = false;
                 if (result) {
-                    console.log(result.id);
                     this.$router.push({name: 'show', params: {product_id: result.id}});
                 } else {
                     this.$router.push({name: 'home', query: {search: this.searchString}});
