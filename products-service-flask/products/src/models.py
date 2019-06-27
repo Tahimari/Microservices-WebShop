@@ -27,6 +27,9 @@ class Products(db.Model):
 		self.name = name
 		self.price = price
 
+	def as_dict(self):
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class ProductResources(db.Model):
 	__tablename__ = 'product_resources'
 	
