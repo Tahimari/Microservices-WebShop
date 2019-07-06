@@ -33,6 +33,7 @@ def makeOrderDict(order):
 	
 	orderDict['order_id'] = order.id
 	orderDict['customer_id'] = order.customer_id
+	orderDict['created'] = order.created
 	
 	order_status = OrderStatus.query.get(order.order_status_code)
 	statusSchema = OrderStatusSchema(strict=True)
@@ -41,7 +42,7 @@ def makeOrderDict(order):
 	order_items = OrderItems.query.filter_by(order_id=order.id).all()
 	itemsSchema = OrderItemsSchema(strict=True, many=True, exclude = ('id', 'order_id'))
 	orderDict['order_items'] = itemsSchema.dump(order_items).data
-	
+
 	return orderDict
 
 def createErrorResult(message, code):

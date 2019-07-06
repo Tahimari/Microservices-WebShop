@@ -50,7 +50,7 @@
                     </b-form-input>
                 </b-form-group>
                 <!-- Product price -->
-                <b-form-group id="form-product-price-group" label="Price:" label-for="form-product-price-input">
+                <b-form-group id="form-product-price-group" label="Price (PLN):" label-for="form-product-price-input">
                     <b-form-input id="form-product-price-input" type="number" step="0.01" min="0"
                                   v-model="addProductForm.price" required autofocus placeholder="Enter product price">
                     </b-form-input>
@@ -95,7 +95,7 @@
                     </b-form-input>
                 </b-form-group>
                 <!-- Product price -->
-                <b-form-group id="form-price-group" label="Price:" label-for="form-price-input">
+                <b-form-group id="form-price-group" label="Price (PLN):" label-for="form-price-input">
                     <b-form-input id="form-price-input" type="number" step="0.01" min="0"
                                   v-model="selectedProduct.price" required autofocus placeholder="Enter product price">
                     </b-form-input>

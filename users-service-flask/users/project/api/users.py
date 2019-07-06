@@ -65,6 +65,7 @@ class Users(Resource):
             'status': 'fail',
             'message': 'User does not exist'
         }
+        post_data = request.get_json()
         try:
             user = User.query.filter_by(id=int(user_id)).first()
             if not user:
@@ -83,6 +84,52 @@ class Users(Resource):
                 return response_object, 200
         except ValueError:
             return response_object, 404
+
+class UsersToken(Resource):
+    def get(self):
+        auth_header = request.headers.get('Authorization')
+        if auth_header:
+            auth_token = auth_header.split(" ")[1]
+        else:
+            auth_token = ''
+        if auth_token:
+            resp = User.decode_auth_token(auth_token)
+            if not isinstance(resp, str):
+                response_object = {
+                    'status': 'fail',
+                    'message': 'User does not exist'
+                }
+                try:
+                    user = User.query.filter_by(id=int(resp['customer_id'])).first()
+                    if not user:
+                        return response_object, 404
+                    else:
+                        response_object = {
+                            'status': 'success',
+                            'data': {
+                                'id': user.id,
+                                'email': user.email,
+                                'first_name': user.first_name,
+                                'last_name': user.last_name,
+                                'password': user.password
+                            }
+                        }
+                        return response_object, 200
+                except ValueError:
+                    return response_object, 404
+            else:
+                response_object = {
+                    'status': 'fail',
+                    'message': 'Invalid jwt token'
+                }
+                return response_object, 404
+        else:
+            response_object = {
+                'status': 'fail',
+                'message': 'Jwt token not provided'
+            }
+            return response_object, 404
+
 
 
 
@@ -159,5 +206,6 @@ class LogoutAPI(Resource):
 api.add_resource(UsersPing, '/users/ping')
 api.add_resource(UsersList, '/users')
 api.add_resource(Users, '/users/<user_id>')
+api.add_resource(UsersToken, '/users/token')
 api.add_resource(LoginAPI, '/users/login')
 api.add_resource(LogoutAPI, '/users/logout')

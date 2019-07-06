@@ -16,3 +16,4 @@ class OrdersSchema(Schema):
 	customer_id = fields.Integer()
 	order_status = fields.Nested(OrderStatusSchema)
 	order_items = fields.Nested(OrderItemsSchema(many=True))
+	created = fields.Date()

@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import datetime
 
 db = SQLAlchemy()
 
@@ -20,10 +21,12 @@ class Orders(db.Model):
 	customer_id = db.Column(db.Integer, nullable=False)
 	order_status_code = db.Column(db.Integer, db.ForeignKey('order_status_codes.id'), nullable=False)
 	order_items = db.relationship('OrderItems', backref='order', lazy='joined')
+	created = db.Column(db.DateTime, nullable=False)
 	
 	def __init__(self, customer_id):
 		self.customer_id = customer_id
 		self.order_status_code = 0
+		self.created = datetime.datetime.now()
 
 class OrderItems(db.Model):
 	__tablename__ = 'order_items'
