@@ -65,9 +65,6 @@ class User(db.Model):
 
 
 class BlacklistToken(db.Model):
-    """
-    Token Model for storing JWT tokens
-    """
     __tablename__ = 'blacklist_tokens'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -83,7 +80,6 @@ class BlacklistToken(db.Model):
 
     @staticmethod
     def check_blacklist(auth_token):
-        # check whether auth token has been blacklisted
         res = BlacklistToken.query.filter_by(token=str(auth_token)).first()
         if res:
             return True

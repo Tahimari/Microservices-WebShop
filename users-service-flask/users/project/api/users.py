@@ -1,8 +1,9 @@
 from flask import Blueprint, request, render_template
 from flask_restful import Resource, Api
 from sqlalchemy import exc
+from flask_mail import Message
 
-from project import db
+from project import db, mail
 from project.api.models import User, BlacklistToken
 
 
@@ -202,6 +203,37 @@ class LogoutAPI(Resource):
             }
             return responseObject, 403
 
+class mailAPI(Resource):
+    def post(self):
+        post_data = request.get_json()
+        response_object = {
+            'status': 'fail',
+            'message': 'Invalid payload.'
+        }
+        if not post_data:
+            return response_object, 400
+        email = post_data.get('email')
+        name = post_data.get('name')
+        message = post_data.get('message')
+        response_object = {
+            'email': email,
+            'name': name,
+            'message': message,
+        }
+        try:
+            msg = Message(name,
+                          sender=email,
+                          recipients=['kamilm215@gmail.com'])
+            msg.body = message
+            mail.send(msg)
+            response_object = {
+                'status': 'success',
+                'message': 'Mail sent.'
+            }
+            return  response_object, 200
+        except Exception as e:
+            return  str(e)
+
 
 api.add_resource(UsersPing, '/users/ping')
 api.add_resource(UsersList, '/users')
@@ -209,3 +241,4 @@ api.add_resource(Users, '/users/<user_id>')
 api.add_resource(UsersToken, '/users/token')
 api.add_resource(LoginAPI, '/users/login')
 api.add_resource(LogoutAPI, '/users/logout')
+api.add_resource(mailAPI, '/mail')

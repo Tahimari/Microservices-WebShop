@@ -55,7 +55,7 @@
                                   v-model="addProductForm.price" required autofocus placeholder="Enter product price">
                     </b-form-input>
                 </b-form-group>
-                <!-- Product picture URL -->
+                <!-- Product picture MAIL_URL -->
                 <b-form-group id="form-url-group" label="Picture URL:" label-for="form-url-input">
                     <b-form-input id="form-url-input" type="url" v-model="addProductForm.picture_file_url" required
                                   autofocus placeholder="Enter picture URL">
@@ -100,7 +100,7 @@
                                   v-model="selectedProduct.price" required autofocus placeholder="Enter product price">
                     </b-form-input>
                 </b-form-group>
-                <!-- Product picture URL -->
+                <!-- Product picture MAIL_URL -->
                 <b-form-group id="form-picture-url-group" label="Picture URL:" label-for="form-picture-url-input">
                     <b-form-input id="form-picture-url-input" type="url" v-model="selectedProduct.picture_file_url"
                                   required autofocus placeholder="Enter picture URL">
