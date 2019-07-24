@@ -7,21 +7,16 @@ from src.models import db
 from src.utility_functions import doesDatabaseExist, prepare_database
 from src.db_foreign_key import *
 
-# Init app
 app = Flask(__name__)
 
-# Config database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + DATABASE_FILE_PATH
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Init database
 db.init_app(app)
 app.app_context().push()
 
-# Enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-# Register views
 app.register_blueprint(views_blueprint)
 
 def run_app(debug_mode):

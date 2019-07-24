@@ -1,16 +1,21 @@
 from flask import Blueprint, request, jsonify
+from src.config import S3_BUCKET, S3_SECRET, S3_KEY
 from sqlalchemy.exc import IntegrityError
 from src.schemas import *
 from src.models import *
 from src.utility_functions import makeProductDict
+import boto3
+
+s3 = boto3.resource(
+    's3',
+    aws_access_key_id=S3_KEY,
+    aws_secret_access_key=S3_SECRET)
 
 views_blueprint = Blueprint('views', __name__)
 
 
 @views_blueprint.route('/products/categories', methods=['POST'])
 def add_product_category():
-    postData = request.json
-
     if postData is None:
         errorMessage = 'Cannot find JSON object in request body!'
         return jsonify({'status': 'fail', 'message': errorMessage}), 400
@@ -89,31 +94,28 @@ def add_new_product(category_id):
     if category is None:
         return jsonify({'status': 'fail', 'message': "Category doesn't exist!"}), 400
 
-    requestJSON = request.json
+    requestForm = request.form
 
-    if requestJSON is None:
+    if requestForm is None:
         errorMessage = 'Cannot find JSON object in request body!'
         return jsonify({'status': 'fail', 'message': errorMessage}), 400
 
-    jsonKeys = ['name', 'price', 'picture_file_url', 'product_description']
-
-    for key in jsonKeys:
-        if key not in requestJSON.keys():
-            errorMessage = 'Invalid JSON object in request body!'
-            return jsonify({'status': 'fail', 'message': errorMessage}), 400
-
-    name = requestJSON['name']
-    price = requestJSON['price']
-    picture_file_url = requestJSON['picture_file_url']
-    product_description = requestJSON['product_description']
-
+    name = requestForm.get('name')
+    price = requestForm.get('price')
+    picture_file = request.files['file']
+    picture_url = 'https://s3.eu-central-1.amazonaws.com/flask.s3.test.misiak/' + picture_file.filename;
+    product_description = requestForm.get('product_description')
+    my_bucket = s3.Bucket(S3_BUCKET)
+    my_bucket.Object(picture_url).put(Body=picture_file)
+    object_acl = s3.ObjectAcl(S3_BUCKET, picture_file.filename)
+    object_acl.put(ACL='public-read')
     try:
         newProduct = Products(category_id, name, price)
         db.session.add(newProduct)
         db.session.flush()
         newProductResources = ProductResources( \
             newProduct.id, \
-            picture_file_url, \
+            picture_url, \
             product_description)
         db.session.add(newProductResources)
         db.session.commit()
