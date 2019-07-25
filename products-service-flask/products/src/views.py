@@ -103,15 +103,15 @@ def add_new_product(category_id):
     name = requestForm.get('name')
     price = requestForm.get('price')
     product_description = requestForm.get('product_description')
-
     picture_file = request.files['file']
-    picture_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_file.filename;
-    my_bucket = s3.Bucket(S3_BUCKET)
-    my_bucket.Object(picture_file.filename).put(Body=picture_file)
-    object_acl = s3.ObjectAcl(S3_BUCKET, picture_file.filename)
-    object_acl.put(ACL='public-read')
 
     try:
+        my_bucket = s3.Bucket(S3_BUCKET)
+        my_bucket.Object(picture_file.filename).put(Body=picture_file)
+        object_acl = s3.ObjectAcl(S3_BUCKET, picture_file.filename)
+        object_acl.put(ACL='public-read')
+        picture_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_file.filename;
+
         newProduct = Products(category_id, name, price)
         db.session.add(newProduct)
         db.session.flush()
@@ -205,11 +205,11 @@ def change_product_data(product_id):
 
         if file:
             picture_file = request.files['file']
-            productResources.picture_file_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_file.filename;
             my_bucket = s3.Bucket(S3_BUCKET)
             my_bucket.Object(picture_file.filename).put(Body=picture_file)
             object_acl = s3.ObjectAcl(S3_BUCKET, picture_file.filename)
             object_acl.put(ACL='public-read')
+            productResources.picture_file_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_file.filename;
 
         productResources.product_description = requestForm.get('product_description')
         db.session.commit()
