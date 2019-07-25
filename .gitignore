@@ -3,4 +3,3 @@ users-service-flask/users/htmlcov/
 .DS_Store
 .idea
 db.sqlite
-products-service-flask/products/src/config.py
