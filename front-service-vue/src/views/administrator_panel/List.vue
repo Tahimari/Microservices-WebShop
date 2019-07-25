@@ -82,7 +82,8 @@
             </div>
         </b-modal>
         <b-modal id="edit-product-dialog" title-tag="h2" title="Edit product" hide-footer>
-            <b-form @submit="onEditSubmit" @reset="hideModal('edit-product-dialog')" class="w-100">
+            <b-form @submit="onEditSubmit" @reset="hideModal('edit-product-dialog')" class="w-100"
+                    enctype="multipart/form-data">
                 <b-form-group id="form-name-group" label="Name:" label-for="form-name-input">
                     <b-form-input id="form-name-input" type="text" v-model="selectedProduct.name" required autofocus
                                   placeholder="Enter product name">
@@ -93,10 +94,13 @@
                                   v-model="selectedProduct.price" required autofocus placeholder="Enter product price">
                     </b-form-input>
                 </b-form-group>
-                <b-form-group id="form-picture-url-group" label="Picture URL:" label-for="form-picture-url-input">
-                    <b-form-input id="form-picture-url-input" type="url" v-model="selectedProduct.picture_file_url"
-                                  required autofocus placeholder="Enter picture URL">
-                    </b-form-input>
+                <b-form-group id="form-image-group" label="Image:">
+                    <b-form-file
+                            v-model="file"
+                            :state="Boolean(file)"
+                            placeholder="Choose a file..."
+                            drop-placeholder="Drop file here..."
+                    ></b-form-file>
                 </b-form-group>
                 <b-form-group id="form-description-group" label="Product description:"
                               label-for="form-description-input">
@@ -107,8 +111,8 @@
                     </b-form-textarea>
                 </b-form-group>
                 <div class="modal-footer">
-                    <b-button type="reset" variant="danger"> Cancel</b-button>
-                    <b-button type="submit" variant="success"> Edit</b-button>
+                    <b-button type="reset" variant="danger">Cancel</b-button>
+                    <b-button type="submit" variant="success">Edit</b-button>
                 </div>
             </b-form>
         </b-modal>
@@ -207,18 +211,18 @@
             onEditSubmit(evt) {
                 evt.preventDefault();
                 this.hideModal("edit-product-dialog");
+                const formData = new FormData();
                 const productID = this.selectedProduct.id;
-                const requestJSON = {
-                    name: this.selectedProduct.name,
-                    price: this.selectedProduct.price,
-                    picture_file_url: this.selectedProduct.picture_file_url,
-                    product_description: this.selectedProduct.description,
-                };
-                this.editProduct(productID, requestJSON);
+                formData.append('name', this.selectedProduct.name);
+                formData.append('price', this.selectedProduct.price);
+                formData.append('file', this.file);
+                formData.append('product_description', this.selectedProduct.description);
+                this.editProduct(productID, formData);
+                this.file = "";
             },
-            editProduct(productID, requestJSON) {
-                const path = 'http://localhost:5002/products/' + String(productID);
-                axios.put(path, requestJSON)
+            editProduct(productID, formData) {
+                const PRODUCT_URL = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/edit/${productID}`;
+                axios.post(PRODUCT_URL, formData)
                     .then(() => {
                         this.getAllProducts();
                     })
@@ -243,7 +247,6 @@
             },
             addProduct(categoryID, formData) {
                 const PRODUCT_URL = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${categoryID}`;
-                console.log(PRODUCT_URL);
                 axios.post(PRODUCT_URL, formData)
                     .then(() => {
                         this.getAllProducts();
@@ -253,12 +256,13 @@
                         this.getAllProducts();
                     });
             },
-            clearAddFormObject() {
+            clearFormObject() {
                 this.addProductForm.category_id = 0;
                 this.addProductForm.name = '';
                 this.addProductForm.price = 0.0;
                 this.addProductForm.picture_file_url = '';
                 this.addProductForm.description = '';
+                this.file = "";
             },
         },
         created() {

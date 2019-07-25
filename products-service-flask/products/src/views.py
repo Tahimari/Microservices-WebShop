@@ -102,13 +102,15 @@ def add_new_product(category_id):
 
     name = requestForm.get('name')
     price = requestForm.get('price')
-    picture_file = request.files['file']
-    picture_url = 'https://s3.eu-central-1.amazonaws.com/flask.s3.test.misiak/' + picture_file.filename;
     product_description = requestForm.get('product_description')
+
+    picture_file = request.files['file']
+    picture_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_file.filename;
     my_bucket = s3.Bucket(S3_BUCKET)
-    my_bucket.Object(picture_url).put(Body=picture_file)
+    my_bucket.Object(picture_file.filename).put(Body=picture_file)
     object_acl = s3.ObjectAcl(S3_BUCKET, picture_file.filename)
     object_acl.put(ACL='public-read')
+
     try:
         newProduct = Products(category_id, name, price)
         db.session.add(newProduct)
@@ -178,33 +180,38 @@ def get_all_products_in_category(category_name):
     return jsonify(responseData), 200
 
 
-@views_blueprint.route('/products/<int:product_id>', methods=['PUT'])
+@views_blueprint.route('/products/edit/<int:product_id>', methods=['POST'])
 def change_product_data(product_id):
     product = Products.query.get(product_id)
     if product is None:
         return jsonify({'status': 'fail', 'message': "Product doesn't exist!"}), 404
 
-    requestJSON = request.json
+    requestForm = request.form
 
-    if requestJSON is None:
+    if requestForm is None:
         errorMessage = 'Cannot find JSON object in request body!'
         return jsonify({'status': 'fail', 'message': errorMessage}), 400
 
-    jsonKeys = ['name', 'price', 'picture_file_url', 'product_description']
-
-    for key in jsonKeys:
-        if key not in requestJSON.keys():
-            errorMessage = 'Invalid JSON object in request body!'
-            return jsonify({'status': 'fail', 'message': errorMessage}), 400
 
     try:
-        product.name = requestJSON['name']
-        product.price = requestJSON['price']
-
+        product.name = requestForm.get('name')
+        product.price = requestForm.get('price')
         productResources = ProductResources.query.filter_by(product_id=product.id).first()
-        productResources.picture_file_url = requestJSON['picture_file_url']
-        productResources.product_description = requestJSON['product_description']
 
+        try:
+            file = request.files['file']
+        except:
+            file = None
+
+        if file:
+            picture_file = request.files['file']
+            productResources.picture_file_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_file.filename;
+            my_bucket = s3.Bucket(S3_BUCKET)
+            my_bucket.Object(picture_file.filename).put(Body=picture_file)
+            object_acl = s3.ObjectAcl(S3_BUCKET, picture_file.filename)
+            object_acl.put(ACL='public-read')
+
+        productResources.product_description = requestForm.get('product_description')
         db.session.commit()
         return jsonify({'status': 'success', 'message': 'Product data changed!'}), 200
     except IntegrityError as e:
