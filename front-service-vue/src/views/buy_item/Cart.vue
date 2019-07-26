@@ -97,7 +97,7 @@ export default {
         },
 		getOrderedProducts() {
             this.total_price = 0.0;
-            const path = 'http://localhost:5003/orders/pending';
+            const path = `${process.env.VUE_APP_ORDERS_SERVICE_URL}/orders/pending`;
             axios.get(path, {
                 params: {
                     token: this.token
@@ -128,7 +128,7 @@ export default {
         deleteProduct() {
             let orderID = this.order_id;
             let productID = this.selectedProduct.id;
-            const path = `http://localhost:5003/orders/${orderID}/${productID}`;
+            const path = `${process.env.VUE_APP_ORDERS_SERVICE_URL}/orders/${orderID}/${productID}`;
             axios.delete(path, {
                 data: {
                     token: this.token
@@ -165,8 +165,7 @@ export default {
                 tempProduct.quantity = tempItem.quantity;
                 let productID = tempItem.product_id;
                 tempProduct.id = productID;
-                
-                const path = 'http://localhost:5002/products/' + String(productID);
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${productID}`;
                 axios.get(path)
                 .then((res) => {
                     let responseData = res.data.data;

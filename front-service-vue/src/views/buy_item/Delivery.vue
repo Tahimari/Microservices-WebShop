@@ -120,7 +120,7 @@ export default {
 			this.addShipmentForm.phoneNumber = '';
 		},
 		addNewShipment(payload) {
-			const path = 'http://localhost:5004/shipments';
+			const path = `${process.env.VUE_APP_SHIPMENTS_SERVICE_URL}/shipments`;
 			axios.post(path, payload)
 			.then((res) => {
 				this.setOrderAsComplete();
@@ -132,7 +132,7 @@ export default {
 			});
 		},
 		setOrderAsComplete() {
-			const path = 'http://localhost:5003/orders/' + String(this.order_id);
+			const path = `${process.env.VUE_APP_ORDERS_SERVICE_URL}/orders/${this.order_id}`;
 			const payload = {
 				token: this.token,
 				new_status_code: 1
@@ -183,7 +183,7 @@ export default {
 			}
 		},
 		getShipmentTypes() {
-			const path = 'http://localhost:5004/shipments/types';
+			const path = `${process.env.VUE_APP_SHIPMENTS_SERVICE_URL}/shipments/types`;
 			axios.get(path)
 			.then((res) => {
 				this.shipmentTypes = res.data.data;
@@ -198,7 +198,7 @@ export default {
         },
 		checkIfCartIsNotEmpty() {
 			if (this.token) {
-				const path = 'http://localhost:5003/orders/pending';
+				const path = `${process.env.VUE_APP_ORDERS_SERVICE_URL}/orders/pending`;
 				axios.get(path, {
 					params: {
 						token: this.token

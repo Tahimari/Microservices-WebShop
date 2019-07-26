@@ -43,16 +43,16 @@ export default {
 	}, 
 	methods: {
 		getAllProducts() {
-			const path = 'http://localhost:5002/products';
+			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products`;
 			this.sendGetRequest(path, false);
 		},
 		getProductsFromCategory(categoryName) {
-			const path = 'http://localhost:5002/products/' + String(categoryName);
+			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${categoryName}`;
 			this.sendGetRequest(path, true);
 		},
 		getProductsFilteredByQuery(queryString) {
 			queryString = queryString.toLowerCase();
-			const path = 'http://localhost:5002/products';
+			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products`;
 			axios.get(path)
 			.then((res) => {
 				let tempInputProducts = res.data.data;

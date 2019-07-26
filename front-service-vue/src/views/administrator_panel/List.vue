@@ -146,7 +146,7 @@
         },
         methods: {
             getProductCategories() {
-                const path = 'http://localhost:5002/products/categories';
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/categories`;
                 axios.get(path)
                     .then((res) => {
                         this.productCategories = res.data.data;
@@ -158,7 +158,7 @@
             },
             getAllProducts() {
                 this.getProductCategories();
-                const path = 'http://localhost:5002/products';
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products`;
                 axios.get(path)
                     .then((res) => {
                         this.products = res.data.data;
@@ -198,7 +198,7 @@
             },
             deleteProduct() {
                 let product_id = this.selectedProduct.id;
-                const path = 'http://localhost:5002/products/' + String(product_id);
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${product_id}`;
                 axios.delete(path)
                     .then((res) => {
                         this.products = this.products.filter(obj => obj.id !== product_id);
@@ -223,6 +223,7 @@
             editProduct(productID, formData) {
                 const PRODUCT_URL = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/edit/${productID}`;
                 axios.post(PRODUCT_URL, formData)
+
                     .then(() => {
                         this.getAllProducts();
                     })
