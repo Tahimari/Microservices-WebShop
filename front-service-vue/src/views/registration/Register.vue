@@ -53,7 +53,7 @@
                 this.addUser(payload);
             },
             addUser(payload) {
-                const path = 'http://localhost:5001/users';
+				const path = `${process.env.VUE_APP_USERS_SERVICE_URL}/users`;
                 this.$http.post(path, payload)
                 .then(() => {
                     this.alert = 'Customer added!';

@@ -79,7 +79,7 @@
         },
         methods: {
             getProduct(productID) {
-                const path = 'http://localhost:5002/products/' + String(productID);
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${productID}`;
                 axios.get(path)
                     .then((res) => {
                         this.product = res.data.data;
@@ -93,7 +93,7 @@
                 this.getProduct(productID);
             },
             addProductToCart() {
-                const path = 'http://localhost:5003/orders';
+                const path = `${process.env.VUE_APP_ORDERS_SERVICE_URL}/orders`;
                 const payload = {
                     token: this.token,
                     product_id: this.product.id,
