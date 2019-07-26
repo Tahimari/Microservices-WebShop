@@ -1,0 +1,65 @@
+version: '3.7'
+
+services:
+  users-db:
+    build:
+      context: ./users-service-flask/users/project/db
+      dockerfile: Dockerfile
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  users:
+    build:
+      context: ./users-service-flask/users
+      dockerfile: Dockerfile
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_ENV=production
+      - APP_SETTINGS=project.config.DevelopmentConfig 
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+    depends_on:
+      - users-db
+
+  products:
+    build:
+      context: ./products-service-flask/products
+      dockerfile: Dockerfile
+    ports:
+      - 5002:80
+  
+  orders:
+    build:
+      context: ./orders-service-flask/orders
+      dockerfile: Dockerfile
+    ports:
+      - 5003:80
+
+  shipments:
+    build:
+      context: ./shipments-service-flask/shipments
+      dockerfile: Dockerfile
+    ports:
+      - 5004:80
+
+  client:
+    build:
+      context: ./front-service-vue
+      target: 'develop-stage'
+    ports:
+      - 80:8080
+    environment:
+      - VUE_APP_USERS_SERVICE_URL=http://3.122.206.203:5001
+      - VUE_APP_PRODUCTS_SERVICE_URL=http://3.122.206.203:5002
+      - VUE_APP_ORDERS_SERVICE_URL=http://3.122.206.203:5003
+      - VUE_APP_ORDERS_SHIPMENTS_URL=http://3.122.206.203:5004
+    command: /bin/sh -c "npm run serve"
+    depends_on:
+      - users
+      - users-db
+      - products
+      - orders
