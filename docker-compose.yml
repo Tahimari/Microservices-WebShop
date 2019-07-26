@@ -35,6 +35,9 @@ services:
       - './products-service-flask/products:/app'
     ports:
       - 5002:80
+    environment:
+      - FLASK_ENV=development
+      - USERS_URL=http://users:5000
   
   orders:
     build:
@@ -44,6 +47,9 @@ services:
       - './orders-service-flask/orders:/app'
     ports:
       - 5003:80
+    environment:
+      - FLASK_ENV=development
+      - USERS_URL=http://users:5000
 
   shipments:
     build:
@@ -53,6 +59,9 @@ services:
       - './shipments-service-flask/shipments:/app'
     ports:
       - 5004:80
+    environment:
+      - FLASK_ENV=development
+      - USERS_URL=http://users:5000
 
   client:
     build:
