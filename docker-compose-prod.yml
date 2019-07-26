@@ -56,7 +56,7 @@ services:
       - VUE_APP_USERS_SERVICE_URL=http://3.122.206.203:5001
       - VUE_APP_PRODUCTS_SERVICE_URL=http://3.122.206.203:5002
       - VUE_APP_ORDERS_SERVICE_URL=http://3.122.206.203:5003
-      - VUE_APP_ORDERS_SHIPMENTS_URL=http://3.122.206.203:5004
+      - VUE_APP_SHIPMENTS_SERVICE_URL=http://3.122.206.203:5004
     command: /bin/sh -c "npm run serve"
     depends_on:
       - users

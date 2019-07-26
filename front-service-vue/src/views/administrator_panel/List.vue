@@ -162,7 +162,7 @@
                 }
             },
             getProductCategories() {
-                const path = 'http://localhost:5002/products/categories';
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/categories`;
                 axios.get(path)
                     .then((res) => {
                         this.productCategories = res.data.data;
@@ -174,7 +174,7 @@
             },
             getAllProducts() {
                 this.getProductCategories();
-                const path = 'http://localhost:5002/products';
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products`;
                 axios.get(path)
                     .then((res) => {
                         this.products = res.data.data;
@@ -195,7 +195,7 @@
             },
             deleteProduct() {
                 let product_id = this.selectedProduct.id;
-                const path = 'http://localhost:5002/products/' + String(product_id);
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${product_id}`;
                 axios.delete(path)
                     .then((res) => {
                         this.products = this.products.filter(obj => obj.id !== product_id);
@@ -206,7 +206,7 @@
                     });
             },
             editProduct(productID, requestJSON) {
-                const path = 'http://localhost:5002/products/' + String(productID);
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${productID}`;
                 axios.put(path, requestJSON)
                     .then(() => {
                         this.getAllProducts();
@@ -236,7 +236,7 @@
                 this.addProductForm.description = '';
             },
             addProduct(categoryID, requestJSON) {
-                const path = 'http://localhost:5002/products/' + String(categoryID);
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${categoryID}`;
                 axios.post(path, requestJSON)
                     .then(() => {
                         this.getAllProducts();
