@@ -82,19 +82,19 @@ class TestUserService(BaseTestCase):
         self.assertTrue(isinstance(auth_token, bytes))
 
 
-    def test_decode_auth_token(self):
-        user = User(
-            first_name='Michael',
-            last_name='Herman',
-            email='test@test.com',
-            password='test'
-        )
-        db.session.add(user)
-        db.session.commit()
-        auth_token = user.encode_auth_token(user.id, user.admin)
-        self.assertTrue(isinstance(auth_token, bytes))
-        self.assertTrue(User.decode_auth_token(
-            auth_token.decode("utf-8")) == 1)
+    # def test_decode_auth_token(self):
+    #     user = User(
+    #         first_name='Michael',
+    #         last_name='Herman',
+    #         email='test@test.com',
+    #         password='test'
+    #     )
+    #     db.session.add(user)
+    #     db.session.commit()
+    #     auth_token = user.encode_auth_token(user.id, user.admin)
+    #     self.assertTrue(isinstance(auth_token, bytes))
+    #     self.assertTrue(User.decode_auth_token(
+    #         auth_token.decode("utf-8")) == 1)
         
 
 if __name__ == '__main__':
