@@ -175,7 +175,7 @@ def add_new_product(category_id):
             picture_file = request.files['file']
 
             try:
-                picture_key = str(time.time()) + picture_file.filename + str(random.randint(1000, 9999))
+                picture_key = str(random.randint(1000, 9999)) + str(time.time()) + picture_file.filename
                 my_bucket = s3.Bucket(S3_BUCKET)
                 my_bucket.Object(picture_key).put(Body=picture_file)
                 object_acl = s3.ObjectAcl(S3_BUCKET, picture_key)
@@ -242,7 +242,7 @@ def change_product_data(product_id):
 
                 if file:
                     picture_file = request.files['file']
-                    picture_key = str(time.time()) + picture_file.filename + str(random.randint(1000, 9999))
+                    picture_key = str(random.randint(1000, 9999)) + str(time.time()) + picture_file.filename
                     my_bucket = s3.Bucket(S3_BUCKET)
                     my_bucket.Object(picture_key).put(Body=picture_file)
                     object_acl = s3.ObjectAcl(S3_BUCKET, picture_key)
