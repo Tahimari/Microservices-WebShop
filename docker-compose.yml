@@ -24,6 +24,7 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig 
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+      - SECRET_KEY=secret
     depends_on:
       - users-db
 
@@ -50,6 +51,7 @@ services:
     environment:
       - FLASK_ENV=development
       - USERS_URL=http://users:5000
+      - SECRET_KEY=secret
 
   shipments:
     build:
@@ -62,6 +64,7 @@ services:
     environment:
       - FLASK_ENV=development
       - USERS_URL=http://users:5000
+      - SECRET_KEY=secret
 
   client:
     build:
@@ -75,6 +78,7 @@ services:
       - VUE_APP_USERS_SERVICE_URL=http://localhost:5001
       - VUE_APP_PRODUCTS_SERVICE_URL=http://localhost:5002
       - VUE_APP_ORDERS_SERVICE_URL=http://localhost:5003
+      - VUE_APP_SHIPMENTS_SERVICE_URL=http://localhost:5004
     command: /bin/sh -c "npm run serve"
     depends_on:
       - users

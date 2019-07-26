@@ -2,7 +2,6 @@ from flask import Blueprint, request, render_template
 from flask_restful import Resource, Api
 from sqlalchemy import exc
 from flask_mail import Message
-
 from project import db, mail
 from project.api.models import User, BlacklistToken
 

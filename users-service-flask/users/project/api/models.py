@@ -2,7 +2,7 @@ from sqlalchemy.sql import func
 import datetime
 import jwt
 from project import db
-
+from project.config import SECRET_KEY
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -43,7 +43,7 @@ class User(db.Model):
             }
             return jwt.encode(
                 payload,
-                "secret",
+                SECRET_KEY,
                 algorithm='HS256'
             )
         except Exception as e:
@@ -52,7 +52,7 @@ class User(db.Model):
     @staticmethod
     def decode_auth_token(auth_token):
         try:
-            payload = jwt.decode(auth_token, "secret")
+            payload = jwt.decode(auth_token, SECRET_KEY)
             is_blacklisted_token = BlacklistToken.check_blacklist(auth_token)
             if is_blacklisted_token:
                 return 'Token blacklisted. Please log in again.'

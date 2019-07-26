@@ -22,6 +22,7 @@ services:
       - APP_SETTINGS=project.config.ProductionConfig 
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+      - SECRET_KEY=secret
     depends_on:
       - users-db
 
@@ -44,6 +45,7 @@ services:
     environment:
       - FLASK_ENV=production
       - USERS_URL=http://users:5000
+      - SECRET_KEY=secret
 
   shipments:
     build:
@@ -54,6 +56,7 @@ services:
     environment:
       - FLASK_ENV=production
       - USERS_URL=http://users:5000
+      - SECRET_KEY=secret
 
   client:
     build:
