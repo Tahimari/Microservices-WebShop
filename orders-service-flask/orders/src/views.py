@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import desc
 from src.schemas import OrderStatusSchema, OrderItemsSchema, OrdersSchema
 from src.models import *
 from src.utility_functions import *
@@ -80,7 +81,7 @@ def get_customer_orders():
 	
 	customerID = decodedToken['customer_id']
 	
-	customerOrders = Orders.query.filter_by(customer_id=customerID).all()
+	customerOrders = (Orders.query.filter_by(customer_id=customerID)).order_by(desc(Orders.created))
 	customerOrdersList = []
 	
 	for order in customerOrders:
