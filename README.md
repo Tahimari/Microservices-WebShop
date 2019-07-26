@@ -1,5 +1,8 @@
 # Microservices-WebShop
 
+App is available on: <br>
+http://3.122.206.203/
+
 ## To run app
 ```
 docker-compose up -d --build
