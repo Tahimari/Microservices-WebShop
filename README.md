@@ -3,7 +3,7 @@
 App is available on: <br>
 http://3.122.206.203/
 
-[![Build Status](https://travis-ci.org/Tahimari/Microservices-WebShop.svg?branch=master)](https://travis-ci.org/Tahimari/Microservices-WebShop)
+[![Build Status](https://travis-ci.com/Tahimari/Microservices-WebShop.svg?branch=master)](https://travis-ci.com/Tahimari/Microservices-WebShop)
 
 ## To run app
 ```
