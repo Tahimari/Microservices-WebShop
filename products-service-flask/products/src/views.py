@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+import time, random
 from src.config import S3_BUCKET, S3_SECRET, S3_KEY
 from sqlalchemy.exc import IntegrityError
 from src.schemas import *
@@ -88,45 +89,6 @@ def remove_category(category_id):
         return jsonify({'status': 'fail', 'message': errorInfo[0]}), 409
 
 
-@views_blueprint.route('/products/<int:category_id>', methods=['POST'])
-def add_new_product(category_id):
-    category = Categories.query.get(category_id)
-    if category is None:
-        return jsonify({'status': 'fail', 'message': "Category doesn't exist!"}), 400
-
-    requestForm = request.form
-
-    if requestForm is None:
-        errorMessage = 'Cannot find JSON object in request body!'
-        return jsonify({'status': 'fail', 'message': errorMessage}), 400
-
-    name = requestForm.get('name')
-    price = requestForm.get('price')
-    product_description = requestForm.get('product_description')
-    picture_file = request.files['file']
-
-    try:
-        my_bucket = s3.Bucket(S3_BUCKET)
-        my_bucket.Object(picture_file.filename).put(Body=picture_file)
-        object_acl = s3.ObjectAcl(S3_BUCKET, picture_file.filename)
-        object_acl.put(ACL='public-read')
-        picture_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_file.filename;
-
-        newProduct = Products(category_id, name, price)
-        db.session.add(newProduct)
-        db.session.flush()
-        newProductResources = ProductResources( \
-            newProduct.id, \
-            picture_url, \
-            product_description)
-        db.session.add(newProductResources)
-        db.session.commit()
-        return jsonify({'status': 'success', 'message': 'New product added!'}), 200
-    except IntegrityError as e:
-        errorInfo = e.orig.args
-        return jsonify({'status': 'fail', 'message': errorInfo[0]}), 409
-
-
 @views_blueprint.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     product = Products.query.get(product_id)
@@ -179,6 +141,44 @@ def get_all_products_in_category(category_name):
 
     return jsonify(responseData), 200
 
+@views_blueprint.route('/products/<int:category_id>', methods=['POST'])
+def add_new_product(category_id):
+    category = Categories.query.get(category_id)
+    if category is None:
+        return jsonify({'status': 'fail', 'message': "Category doesn't exist!"}), 400
+
+    requestForm = request.form
+
+    if requestForm is None:
+        errorMessage = 'Cannot find JSON object in request body!'
+        return jsonify({'status': 'fail', 'message': errorMessage}), 400
+
+    name = requestForm.get('name')
+    price = requestForm.get('price')
+    product_description = requestForm.get('product_description')
+    picture_file = request.files['file']
+
+    try:
+        picture_key = str(time.time()) + picture_file.filename + str(random.randint(1000, 9999))
+        my_bucket = s3.Bucket(S3_BUCKET)
+        my_bucket.Object(picture_key).put(Body=picture_file)
+        object_acl = s3.ObjectAcl(S3_BUCKET, picture_key)
+        object_acl.put(ACL='public-read')
+        picture_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_key;
+
+        newProduct = Products(category_id, name, price)
+        db.session.add(newProduct)
+        db.session.flush()
+        newProductResources = ProductResources( \
+            newProduct.id, \
+            picture_url, \
+            product_description)
+        db.session.add(newProductResources)
+        db.session.commit()
+        return jsonify({'status': 'success', 'message': 'New product added!'}), 200
+    except IntegrityError as e:
+        errorInfo = e.orig.args
+        return jsonify({'status': 'fail', 'message': errorInfo[0]}), 409
 
 @views_blueprint.route('/products/edit/<int:product_id>', methods=['POST'])
 def change_product_data(product_id):
@@ -205,11 +205,12 @@ def change_product_data(product_id):
 
         if file:
             picture_file = request.files['file']
+            picture_key = str(time.time()) + picture_file.filename + str(random.randint(1000, 9999))
             my_bucket = s3.Bucket(S3_BUCKET)
-            my_bucket.Object(picture_file.filename).put(Body=picture_file)
-            object_acl = s3.ObjectAcl(S3_BUCKET, picture_file.filename)
+            my_bucket.Object(picture_key).put(Body=picture_file)
+            object_acl = s3.ObjectAcl(S3_BUCKET, picture_key)
             object_acl.put(ACL='public-read')
-            productResources.picture_file_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_file.filename;
+            productResources.picture_file_url = 'https://s3.eu-central-1.amazonaws.com/' + S3_BUCKET + '/' + picture_key;
 
         productResources.product_description = requestForm.get('product_description')
         db.session.commit()
