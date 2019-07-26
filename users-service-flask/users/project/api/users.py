@@ -50,34 +50,6 @@ class UserRegister(Resource):
             db.session.rollback()
             return response_object, 400
 
-
-
-# class Users(Resource):
-#     def get(self, user_id):
-#         response_object = {
-#             'status': 'fail',
-#             'message': 'User does not exist'
-#         }
-#         post_data = request.get_json()
-#         try:
-#             user = User.query.filter_by(id=int(user_id)).first()
-#             if not user:
-#                 return response_object, 404
-#             else:
-#                 response_object = {
-#                     'status': 'success',
-#                     'data': {
-#                         'id': user.id,
-#                         'email': user.email,
-#                         'first_name': user.first_name,
-#                         'last_name': user.last_name,
-#                         'password': user.password
-#                     }
-#                 }
-#                 return response_object, 200
-#         except ValueError:
-#             return response_object, 404
-
 class UsersToken(Resource):
     def get(self):
         auth_header = request.headers.get('Authorization')
@@ -230,7 +202,6 @@ class mailAPI(Resource):
 
 api.add_resource(UsersPing, '/users/ping')
 api.add_resource(UserRegister, '/users')
-#api.add_resource(Users, '/users/<user_id>')
 api.add_resource(UsersToken, '/users/token')
 api.add_resource(LoginAPI, '/users/login')
 api.add_resource(LogoutAPI, '/users/logout')
