@@ -22,23 +22,6 @@ class TestUserService(BaseTestCase):
         self.assertIn('pong!', data['message'])
         self.assertIn('success', data['status'])
 
-    def test_all_users(self):
-        """Ensure get all users behaves correctly."""
-        add_user('michael@mherman.org', 'michael', 'Herman', 'qwerty123456')
-        add_user('fletcher@notreal.com', 'fletcher', 'Herman', 'qwerty123456')
-        with self.client:
-            response = self.client.get('/users')
-            data = json.loads(response.data.decode())
-            self.assertEqual(response.status_code, 200)
-            self.assertEqual(len(data['users']), 2)
-            self.assertIn('michael', data['users'][0]['first_name'])
-            self.assertIn(
-                'michael@mherman.org', data['users'][0]['email'])
-            self.assertIn('fletcher', data['users'][1]['first_name'])
-            self.assertIn(
-                'fletcher@notreal.com', data['users'][1]['email'])
-            self.assertIn('success', data['status'])
-
 
     def test_encode_auth_token(self):
         user = User(
