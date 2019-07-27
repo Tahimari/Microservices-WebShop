@@ -16,6 +16,8 @@ before_script:
   - docker-compose up -d --build
 
 script:
+  - docker-compose exec users python manage.py recreate_db
+  - docker-compose exec users python manage.py seed_db
   - docker-compose exec users python manage.py test
   
 after_script:
