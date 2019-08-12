@@ -42,6 +42,7 @@ def seed_db():
     db.session.add(User(email="hermanmu@gmail.com", first_name='asdasd', last_name='Bca123', password='Abc123'))
     db.session.add(User(email="asdasd@gmail.com", first_name='qweqwe', last_name='qwqweqwe', password='qweqweqw'))
     db.session.add(User(email="kamilm215@gmail.com", first_name='Kamil', last_name='Misiak', password='qwe123', admin=1))
+    db.session.add(User(email="seba___stian@wp.pl", first_name='Sebastian', last_name='Kania', password='qwerty123', admin=1))
     db.session.commit()
 
 @cli.command()
