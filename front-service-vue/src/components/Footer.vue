@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <b-navbar toggleable="lg" type="dark" variant="primary">
+        <b-navbar toggleable="lg" type="dark" variant="dark">
             <div class="container footer-white">
                 <b-navbar-nav>
                     <b-nav-item to="/">Home</b-nav-item>

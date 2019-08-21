@@ -304,7 +304,7 @@
             },
             validate(file) {
                 const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-                const MAX_SIZE = 200000;
+                const MAX_SIZE = 250000;
                 const tooLarge = file.size > MAX_SIZE;
                 if (allowedTypes.includes(file.type) && !tooLarge) {
                     return true;

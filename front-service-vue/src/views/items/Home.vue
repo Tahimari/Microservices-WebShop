@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col" v-for="product in products">
 					<a :href="`/show/${product.id}`">
-						<img :src="product.resources.picture_file_url" width="280">
+						<img :src="product.resources.picture_file_url" width="300" height="300">
 						<p>{{ product.name }}</p>
 					</a>
 					<p>{{ product.price }} zł</p>
