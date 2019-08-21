@@ -309,6 +309,12 @@
                 if (allowedTypes.includes(file.type) && !tooLarge) {
                     return true;
                 } else {
+                    this.$notify({
+                      type: 'vue-notification error',
+                      group: 'foo',
+                      title: 'Error',
+                      text: "Wrong file type or size"
+                    });
                     return false;
                 }
             },
@@ -362,10 +368,12 @@
 
                         .then(() => {
                             this.getAllProducts();
+                            window.eventBus.$emit('successProductEdited', 'The product was edited')
                         })
                         .catch(error => {
                             console.error(error);
                             this.getAllProducts();
+                            window.eventBus.$emit('errorProductNotEdited', 'The product was not edited. Try again')
                         });
                 }
             },
@@ -396,10 +404,12 @@
                         .post(PRODUCT_URL, formData, {headers: headers})
                         .then(() => {
                             this.getAllProducts();
+                            window.eventBus.$emit('successProductAdded', 'The product is added')
                         })
                         .catch(error => {
                             console.error(error);
                             this.getAllProducts();
+                            window.eventBus.$emit('errorProductNotAdded', 'The product is not added. Try again.')
                         });
                 }
             },

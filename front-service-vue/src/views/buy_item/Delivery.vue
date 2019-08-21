@@ -126,6 +126,7 @@ export default {
 				this.setOrderAsComplete();
 				this.clearAddShipmentForm();
 				this.$router.push({path: '/'});
+				window.eventBus.$emit('successOrderCompleted', 'Your order has been accepted')
 			})
 			.catch((error) => {
 				console.error(error);
@@ -221,6 +222,9 @@ export default {
 				});
 			}
 		}
+		// sendOrderCompleteSignal(){
+		// 	window.eventBus.$emit('successOrderCompleted', 'Your order has been accepted')
+		// }
 	}
 }
 </script>
