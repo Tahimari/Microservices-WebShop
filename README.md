@@ -1,7 +1,7 @@
 # Microservices-WebShop
 
 App is available on: <br>
-http://3.122.206.203/
+http://3.120.148.31/
 
 [![Build Status](https://travis-ci.com/Tahimari/Microservices-WebShop.svg?branch=master)](https://travis-ci.com/Tahimari/Microservices-WebShop)
 
