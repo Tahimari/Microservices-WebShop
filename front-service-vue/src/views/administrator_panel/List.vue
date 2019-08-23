@@ -47,6 +47,12 @@
             </tr>
             </tbody>
         </table>
+
+        <b-pagination size="md" align="center" :total-rows="100" v-model="currentPage" :per-page="9" @input="getAllProducts(currentPage)">
+        </b-pagination>
+
+        <p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
+
         <b-modal
                 id="add-product-dialog"
                 title-tag="h2"
@@ -255,7 +261,8 @@
                 },
                 productCategories: [],
                 category_options: [],
-                file: ""
+                file: "",
+                currentPage: 1,
             };
         },
         methods: {
@@ -273,9 +280,9 @@
                         console.error(error);
                     });
             },
-            getAllProducts() {
+            getAllProducts(currentPage) {
                 this.getProductCategories();
-                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products`;
+                const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products?page=` + currentPage;
                 axios
                     .get(path)
                     .then(res => {
@@ -284,6 +291,10 @@
                     .catch(error => {
                         console.error(error);
                     });
+                    window.scrollTo({
+                      top: 0,
+                      behavior: 'smooth',
+                    }) 
             },
             setCategoryOptions() {
                 let defaultOption = {value: 0, text: "Select category", disabled: true};
@@ -424,6 +435,9 @@
         },
         created() {
             this.getAllProducts();
-        }
+        },
+        mounted(currentPage){
+            this.getAllProducts(currentPage)
+          }
     };
 </script>

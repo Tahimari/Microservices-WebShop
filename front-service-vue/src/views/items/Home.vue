@@ -15,9 +15,23 @@
 						<img :src="product.resources.picture_file_url" width="300" height="300">
 						<p>{{ product.name }}</p>
 					</a>
-					<p>{{ product.price }} zł</p>
+					<p>{{ product.price }} zł</p>	
 				</div>
 			</div>
+
+
+        	<div v-if="category === ''">
+			  	<b-pagination size="md" align="center" :total-rows="100" v-model="currentPage" :per-page="9" @input="getAllProducts(currentPage)">
+        		</b-pagination>
+        		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
+			</div>
+			<div v-else>
+			  	<b-pagination size="md" align="center" :total-rows="100" v-model="currentPage" :per-page="9" @input="getProductsFromCategory(category)">
+        		</b-pagination>
+        		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
+			</div>
+
+
 		</div>
 		<div v-else>
 			<h2 align="center" class="display-3" style="margin-top: 25px;"> No items to display! </h2>
@@ -33,7 +47,8 @@ export default {
 	data() {
 		return {
 			products: [],
-			category: ''
+			category: '',
+	      	currentPage: 1,
 		}
 	},
 	watch:{
@@ -42,12 +57,16 @@ export default {
 		}
 	}, 
 	methods: {
-		getAllProducts() {
-			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products`;
+		getAllProducts(currentPage) {
+			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products?page=` + this.currentPage;
 			this.sendGetRequest(path, false);
+			window.scrollTo({
+			  top: 0,
+			  behavior: 'smooth',
+			}) 
 		},
 		getProductsFromCategory(categoryName) {
-			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${categoryName}`;
+			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${categoryName}?page=` + this.currentPage;
 			this.sendGetRequest(path, true);
 		},
 		getProductsFilteredByQuery(queryString) {

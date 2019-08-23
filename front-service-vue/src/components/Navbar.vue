@@ -18,7 +18,7 @@
                     <b-navbar-nav>
                         <b-nav-item to="/">Home</b-nav-item>
                         <b-nav-item-dropdown text="Categories" right>
-                            <b-dropdown-item to="/category/Shoes">Shoes</b-dropdown-item>
+                            <b-dropdown-item v-on:click="currentPage = 1" to="/category/Shoes">Shoes</b-dropdown-item>
                             <b-dropdown-item to="/category/T-Shirts">T-Shirts</b-dropdown-item>
                             <b-dropdown-item to="/category/Jackets">Jackets</b-dropdown-item>
                             <b-dropdown-item to="/category/Trousers">Trousers</b-dropdown-item>

@@ -108,10 +108,11 @@ def get_all_products():
     if query:
         products = Products.query.filter(Products.name.contains(query)).all()
     else:
-        products = Products.query.all()
+        page = request.args.get('page', 1, type=int)
+        products = Products.query.paginate(page=page, per_page=9)
     productList = []
 
-    for product in products:
+    for product in products.items:
         tempDict = makeProductDict(product)
         productList.append(tempDict)
 
@@ -129,10 +130,11 @@ def get_all_products_in_category(category_name):
     if category is None:
         return jsonify({'status': 'fail', 'message': "Category doesn't exist!"}), 404
 
-    products = Products.query.filter_by(category_id=category.id).all()
+    page = request.args.get('page', 1, type=int)
+    products = Products.query.filter_by(category_id=category.id).paginate(page=page, per_page=9)
     productList = []
 
-    for product in products:
+    for product in products.items:
         tempDict = makeProductDict(product)
         productList.append(tempDict)
 

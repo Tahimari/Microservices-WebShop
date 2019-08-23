@@ -40,15 +40,6 @@
                 });
             });
 
-            // window.eventBus.$on('successProductEdited', data => {
-            //     //this.$swal('Heading', data, 'OK');
-            //     this.$swal({
-            //       type: 'success',
-            //       title: 'Oops...',
-            //       text: 'Something went wrong!',
-            //   })
-            // });
-
             window.eventBus.$on('successProductEdited', data => {
                 this.notificationClasses = 'vue-notification success'
                 this.$notify({
