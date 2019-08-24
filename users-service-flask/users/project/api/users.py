@@ -188,8 +188,8 @@ class mailAPI(Resource):
         try:
             msg = Message(name,
                           sender=email,
-                          recipients=['kamilm215@gmail.com'])
-            msg.body = message
+                          recipients=['kmisiak501@gmail.com'])
+            msg.body = 'message: ' + message + '\n\n reply: ' + email
             mail.send(msg)
             response_object = {
                 'status': 'success',
