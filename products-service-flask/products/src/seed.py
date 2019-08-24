@@ -10,201 +10,111 @@ def seed_db():
 	
 # Products
 	# Shoes
-	db.session.add(Products(1, 'Adibos ZX 8000', 109.00))
+	db.session.add(Products(1, 'Nike Sportswear AIR MAX 270', 399))
 	db.session.add(ProductResources(1, \
-	'https://a.allegroimg.com/s1440/039ca0/c7caed924e109d443f371c22c498', \
-	'''Uniwersalne buty Adibos ZX 8000 oferują wygodę i przyjemność każdego dnia.
-Są to buty sportowe nawiązujące stylistyką do wcześniejszych projektów Adibos, które otrzymały nową, dynamiczną formę.
-Marka zadbała o atrakcyjną stylistykę, a także zapewniła najwyższą jakość wykonania.
-Cholewka została zrobiona z surowca materiał syntetyczny, dzięki któremu nasze nogi oddychają swobodnie.
-Podeszwa, wykonana z trwałej mieszanki, zapewnia świetną amortyzację i bardzo dobrą przyczepność.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/80251566411038.4717078shoes1.jpg', \
+	'''It's here: the blackout Air Max 270. Perfect for the tech ninja or monotone dresser, it's all black everything. The 32mm tall Max Air unit really stands out in this configuration and reminds the wearer why this has been the shoe of the year.'''))
 	
-	db.session.add(Products(1, 'Redblock Ventylator Athletic M49267', 99.00))
+	db.session.add(Products(1, 'Adidas Ultra Boost Shoes', 279))
 	db.session.add(ProductResources(2, \
-	'https://b.allegroimg.com/s1440/03c560/8f70e73140cf8735769626b783ab', \
-	'''Obuwie dla każdej osoby, która chce poczuć się modnie i wygodnie.
-Seria Ventilator charakteryzuje się rewelacyjnym systemem wentylacji, dzięki czemu stopa pozostaje w świeżości przez długi okres czasu.
-Cholewka została wykonana z elementów naturalnej skóry zamszowej oraz siatki, która dodatkowo poprawia wentylację.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/94761566413627.787838shoes2.jpg', \
+	'''The adidas UltraBoost road running shoe is a superb choice for those looking for unrivalled responsiveness and cushioning to maximise their performance. Utilising a unique midsole technology and engineered upper, the UltraBoost redefines running comfort.'''))
 	
-	db.session.add(Products(1, 'Najki PICO 4 PSV', 84.00))
+	db.session.add(Products(1, 'Checkerboard Classic Slip-On Shoes', 199))
 	db.session.add(ProductResources(3, \
-	'https://a.allegroimg.com/s720/11c3f3/f179aaca480cb4d52e3a9c2ee5a2', \
-	'''Produkt nowy, oryginalny wysyłany z Polski
-	Rozmiar: 21
-
-Parametry towaru
-	Producent: Najki
-	Stan: Nowy
-	Typ: Obuwie
-	Produkt: Buty
-	Płeć: Dzieci
-	Kolor: Granatowy, Biały
-	Materiał zewnętrzny: Skóra naturalna, Materiał syntetyczny
-	Materiał wewnętrzny: Materiał tekstylny
-	Podeszwa: Materiał syntetyczny'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/30651566414763.551343shoes3.png', \
+	'''A low profile, slip-on shoe, the Vans Classic Slip-On has elastic side accents and padded collars for extra comfort. It also features the Vans flag label and signature waffle outsoles for firmer grip.'''))
 	
-	db.session.add(Products(1, 'Najki REVOLUTION 3', 109.00))
+	db.session.add(Products(1, 'Fila Disruptor Low Morning Mist', 399))
 	db.session.add(ProductResources(4, \
-	'https://9.allegroimg.com/s720/033db8/34f8410341a0879fc59722a84249', \
-	'''NOWE BUTY Najki REVOLUTION 3 (PSV)
-	Rozmiar: 31
-	Długość wkładki: 19 cm (Uwaga! Po zmierzeniu centymetrem wkładka wynosi 20 cm)
-	Materiał zewnętrzny: materiał tekstylny z wstawką skóry syntetycznej
-	Materiał wkładki: Tkanina
-	Kolor: game royal/black-wolf grey
-	Najnowszy wzór'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/90291566416856.7725997shoes4.jpg', \
+	'''Women's shoes made of synthetic leather, soft textile lining with padded ankle, with perforations in the toe and inner panel, thick rubber sole molded and serrated for a better grip and embroidered logo on the side, heel and tongue.'''))
 	
-	db.session.add(Products(1, 'Najki TEAM HUSTLE', 149.00))
+	db.session.add(Products(1, 'Converse All Star Low Shoes', 189))
 	db.session.add(ProductResources(5, \
-	'https://a.allegroimg.com/s720/012511/fa5da3f245e79653a77613b7d24b', \
-	'''Najki Team Hustle funkcjonalny model dla osób amatorsko i rekreacyjnie uprawiających sport.
-Świetnie sprawdzą się zarówno podczas treningu jak i w codziennym użytkowaniu.
-Doskonałe dopasowanie i wsparcie na boisku
-Maksymalny komfort, dzięki wygodnej i solidnie wspierającej stopę cholewce
-Solidne obszycia i wykończenia
-Podeszwa wykonana z niebrudzącej gumy Non Marking
-Klasyczne wiązanie dla lepszego dopasowania
-Podeszwa zapewniająca dobrą przyczepność dzięki wielokierunkowemu bieżnikowi'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/32191566418111.9564724shoes5.jpg', \
+	'''This is the Chuck Taylor All Star low top sneaker you’ve always known, now available in Fresh Colors that bring a new expression to the iconic silhouette.'''))
 	
 	# T-Shirts
-	db.session.add(Products(2, 'Najki KOSZULKA MĘSKA T-SHIRT PARK VI', 49.99))
+	db.session.add(Products(2, 'AyeGear 5 Pocket Tshirt', 69))
 	db.session.add(ProductResources(6, \
-	'https://6.allegroimg.com/s1024/018160/f04de04d4076a0cd93da46823486', \
-	'''Marka: Najki
-Stan: Nowy
-Poliester: 100%
-
-Dodatkowe informacje:
-- wyszywane logo
-- technologia DRI-FIT zapewnia suchość, ochłodę i komfort
-- po bokach zastosowano siateczkowe wstawki które zapewniają przewiewność
-- tył koszulki bez napisów, motywów
-
-Zastosowanie:
-- do codziennego użytku
-- trening, sport, piłka nożna'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/44001566411323.7844696tshirt1.jpg', \
+	'''The AyeGear T5 is a T-shirt with five separate compartments designed for travellers to provide security and accessibility to their valuables and travel essentials. Our unique design allows travellers to discreetly carry all their travel essentials such as their smartphone, sunglasses, passport, credit cards and keys. With discretely designed pockets secured by colour-matched and concealed zips (top grade), the T5 wearer can travel in confidence without the fear of losing their valuables to pickpockets.'''))
 	
-	db.session.add(Products(2, 'Adibos ORIGINALS CALIFORNIA', 72.99))
+	db.session.add(Products(2, 'NASA Classic Logo T-Shirt', 59))
 	db.session.add(ProductResources(7, \
-	'https://a.allegroimg.com/s720/03f9b8/3517abe6451285e720577364a511', \
-	'''Sportowa męska koszulka Adibos Originals California uszyta jest z miękkiej bawełny wysokiej jakości i ma nowoczesny, dopasowany krój.
-Ma także trzy paski wzdłuż rękawów i nadrukowane logo Trefoil na piersi po lewej stronie.
-Zaokrąglony dekolt i reglowane rękawy zapewniają idealne leżenie na ciele.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/34351566413882.723157tshirt2.jpg', \
+	'''The perfect look for a fan of space travel! Feel part of the NASA space crew with the white T-shirt featuring NASA Logo on the front. '''))
 	
-	db.session.add(Products(2, 'Adibos Originals', 69.00))
+	db.session.add(Products(2, 'The Curse of Oak Island T-Shirt', 79))
 	db.session.add(ProductResources(8, \
-	'https://a.allegroimg.com/s720/01e829/a09a0c964fd39b3f61e1fb3d0fd3', \
-	'''Skład surowcowy: 100% bawełna
-Nadruk z nazwą i logo producenta z przodu
-Crew-neck pod szyją
-Klasyczny fason
-Produkt posiada komplet metek producenta'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/91811566415459.6027358tshirt3.jpg', \
+	'''The AyeGear T5 is a T-shirt with five separate compartments designed for travellers to provide security and accessibility to their valuables and travel essentials. Our unique design allows travellers to discreetly carry all their travel essentials such as their smartphone, sunglasses, passport, credit cards and keys. With discretely designed pockets secured by colour-matched and concealed zips (top grade), the T5 wearer can travel in confidence without the fear of losing their valuables to pickpockets.'''))
 	
-	db.session.add(Products(2, 'KOSZULKA MAM PIĘKNĄ CÓRKĘ', 19.99))
+	db.session.add(Products(2, 'Unived Athlete Men’s Multi-Sport T-Shirt', 99))
 	db.session.add(ProductResources(9, \
-	'https://3.allegroimg.com/s720/036b66/e6a540eb424a8e2badee551932c3', \
-	'''Koszulka męska, biała, rozmiar L
-Materiał 100% bawełna, gramatura 180-190g.
-Koszulka nie kurczy się, nie rozciąga i nie zmienia koloru.
-Nadruk wysokiej jakości, nie pęka i jest odporny na pranie.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/97961566417098.8201163tshirt4.jpg', \
+	'''Short sleeve round neck performance t-shirt. Ideal for endurance sports like running, cycling, football, and even trekking. Super-cool dri-fit fabric that wicks off sweat allowing for superior performance.'''))
 	
 	# Jackets
-	db.session.add(Products(3, 'KURTKA MĘSKA T-01', 109.99))
+	db.session.add(Products(3, 'Jacket Travel 100 - Grey', 299))
 	db.session.add(ProductResources(10, \
-	'https://e.allegroimg.com/s1024/01777a/2c22bc874e4185ad344c0d8d4c0e', \
-	'''Nowa, oryginalnie zapakowana z kompletem metek.
-Wykonana z wysokiej jakości matreriałów
-Prosta kurtka z zapięciem na zamek błyskawiczny.
-Posiada dwie kieszenie boczne
-W środku wykończona jest materiałową podszewką.
-Absolutny bestseller tego sezonu.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/58731566411549.4035501jacket1.jpg', \
+	'''Our backpacker designers have designed this jacket to enable you to travel the world with peace of mind, in all environments. One modular jacket in 3 products, to adapt to all situations. It has large discreet and compartmented travel pocket to secure your belongings.'''))
 	
-	db.session.add(Products(3, 'MOTO BIKER', 129.00))
+	db.session.add(Products(3, 'Montane Fleet Jacket', 309))
 	db.session.add(ProductResources(11, \
-	'https://a.allegroimg.com/s720/03f695/5755092a4e4388384c38c9058b57', \
-	'''Wiosenna  kurtka PILOTKA ramoneska MOTOR BIKER. Model taliowany, sięgający do bioder.
-Zakończona stójką. W kolorze czarnym.
-Uszyta z materiału doskonale imitującego naturalną skórę, półmatowa (nie świecąca i nie blado matowa).
-Materiał miękki (nie jest sztywny i nie piankowy).
-Zapinana jest na skośny, srebrny zamek oraz patkę na zatrzaski pod szyją.
-Ramoneska posiadana przeszycia i wzmocnienia na ramionach i rękawach w formie pikowań.
-Po bokach dwie kieszonki zapinane na suwaki. Kurtka podszyta jest czarną podszewką.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/28961566414003.2319758jacket2.jpg', \
+	'''Strategically constructed from two different GORE-TEX fabrics to maximise performance and minimise weight. Perfect for any fast-paced activities in the mountains where durability, body temperature and moisture control are essential to comfort.'''))
 	
-	db.session.add(Products(3, 'KATANA JEANSOWA', 109.00))
+	db.session.add(Products(3, 'Mickey Mouse Letterman Jacket', 269))
 	db.session.add(ProductResources(12, \
-	'https://a.allegroimg.com/s720/03b571/d935ee9448b18389afe33b5ef1a6', \
-	'''KATANA z materiału elastycznego, idealnie dopasowuje się do sylwetki
-Kurtka jest miękka, dobrze się układa, idealna na sezon wiosenny i letni do tiulowych spódnic i obcisłych spodni
-KOLOR : Przecierany Odcień Niebieski'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/70431566415603.2242768jacket3.jpeg', \
+	'''They will be the leader of the club when they don this Mickey Mouse letterman jacket for kids. Featuring a classic collegiate coat adorned with Mickey Mouse insginia, this jacket is packed with swell style.'''))
 	
-	db.session.add(Products(3, 'BIKER STÓJKA CAMEL ramoneska', 135.00))
+	db.session.add(Products(3, 'FILA Overhead Shell Suit Jacket', 409))
 	db.session.add(ProductResources(13, \
-	'https://a.allegroimg.com/s720/035256/9999e709481591e291bc5b178f2c', \
-	'''Świetna kurtka ramoneska PILOTKA w kolorze camel (karmelowym).
-O kroju taliowanym, zwężana w pasie. Ramoneska zapina się na skośny, srebrny zamek oraz patkę na zatrzaski tworząc przy tym stójkę.
-Uszyta z materiału doskonale imitującego naturalną skórę, matowa, nieświecąca.
-Materiał miękki (nie jest sztywny i nie piankowy).  Na ramionach oraz na wysokości bioder posiada przeszycia w formie pikowań.
-Po bokach dwie kieszonki zapinane na suwaki oraz jedna na piersi. Z tyłu gładka bez przeczyć.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/61541566417217.0175881jacket4.jpg', \
+	'''This Fila Black Line Jacket has all the characteristics of the great 80s and 90s style that its design is in homage to. Its mainly white and navy in colour with a large FILA logo emblazoned over the white top part of the jacket. '''))
 	
 	# Trousers
-	db.session.add(Products(4, 'Spodnie dresowe czarne', 149.00))
+	db.session.add(Products(4, 'Kokatat Boater Pants', 149))
 	db.session.add(ProductResources(14, \
-	'https://a.allegroimg.com/s720/11b4d5/ed3d999942faade8327e39688e1e', \
-	'''Prezentujemy niezwykle nowoczesne spodnie sportowe od firmy Adibos - Tiro 19Training.
-Model ten został wykonany z najwyższej jakości materiałów, co gwarantuje wygodę i komfort na najwyższym poziomie,
-a dodatkowe siateczkowe wstawki wentylacyjne z technologią Climacool zapewniając maksymalny komfort i zadba o odpowiednią cyrkulację powietrza.
-Spodnie te mają też odpowiednio dopasowany krój, który nie krępuje ruchów w czasie gry.
-
-Kieszenie zapinane na zamek pozwolą na bezpieczne przechowywanie drobnych przedmiotów.
-Spodnie posiadają również zamki na kostkach. Spodnie Adibos Tiro 19 to doskonała propozycja dla wszystkich zawodników, którzy chcą czuć maksymalną wygodę podczas treningów.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/87641566412143.3178384trousers1.jpg', \
+	'''A lightweight, waterproof and breathable pant for general paddling use. Keeps spray and splash off with neoprene waist and ankle closures. TROPOS waterproof, breathable fabric.'''))
 	
-	db.session.add(Products(4, 'Adibos RS Wind Pnt', 99.00))
+	db.session.add(Products(4, 'Player Fit Woven Pant', 124))
 	db.session.add(ProductResources(15, \
-	'https://a.allegroimg.com/s720/03c3a0/7ee932d44836b6063ea6d291d297', \
-	'''	Męskie spodnie dresowe marki Adibos.
-Spodnie charakteryzują się wysoką jakością wykonania oraz komfortem użytkowania.
-Climaproof chroni Cię przed deszczem, wiatrem i śniegiem.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/58631566414568.9096067trousers2.jpg', \
+	'''The best pant in golf. Our Player Fit Woven Pant is an essential of our bottoms collection and is the cornerstone of any golfers closet. Crafted specifically for extreme playability in all conditions, the moisture management properties allow for great natural airflow and breathability. We also added our player specific stretch to these creating that perfect fit and ease of movement.'''))
 	
-	db.session.add(Products(4, 'WRANGLER CHINO', 189.00))
+	db.session.add(Products(4, 'CAT Dynamic Denim Pants', 149))
 	db.session.add(ProductResources(16, \
-	'https://a.allegroimg.com/s1024/012d23/11980554428aaa4b8532028cff21', \
-	'''Męskie spodnie materiałowe w kolorze stalowym. Charakteryzują je fason slim, zwężana nogawka oraz zapięcie na zamek.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/43321566416173.9308207trousers3.jpg', \
+	'''Cat denim work Pants. This lightweight industrial pant is designed with elastic waistband and large pockets to keep you looking and feeling good from sun-up to sun-down.'''))
 	
-	db.session.add(Products(4, 'WRANGLER ARIZONA', 149.00))
+	db.session.add(Products(4, 'Bape Color Camo Track Pants', 150))
 	db.session.add(ProductResources(17, \
-	'https://4.allegroimg.com/s720/032246/0ff7eb0c45bf8b05a5cfe0a32e04', \
-	'''Skład materiału - 98% bawełna, 2% elastan
-Kolor - ceglasty
-Specyfikacja - klasyczny fason, prosta nogawka, elastyczny materiał bardzo wygodne i komfortowe'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/32681566417622.6380475trousers4.jpg', \
+	'''Get outfitted in a legendary pair of military style bdu pants. These pants are sturdily constructed yet also include adjustable waist tabs for a secure fit. These pants feature the famous six pockets, reinforced seat and knees, and drawstring leg closures.'''))
 	
 	# Shirts
-	db.session.add(Products(5, 'Zara lniana koszula', 129.00))
+	db.session.add(Products(5, 'Patagonia Heywood Flannel Shirt ', 99))
 	db.session.add(ProductResources(18, \
-	'https://c.allegroimg.com/original/036b01/06f1069545a5980e3fc352937c9c', \
-	'''Lniana koszula z dekoltem w serek. Długi rękaw. Wiązanie przy mankiecie. Kieszeń z przodu. Rozcięcia u dołu po bokach. Dłuższy tył. Zapięcie na guziki z przodu.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/46011566413313.2889693shirt1.jpg', \
+	'''The homespun look of 100% organic cotton twill flannel goes great with jeans, strappy tanks or wet bikinis. A center-front button closure features faux-horn buttons, and darts add nice contouring and shaping to the fit. The left-chest pocket secures valuables with a single button closure. Long, set-in sleeves with double cuff buttons create a polished finish; shirttail hem falls below the waist. '''))
 	
-	db.session.add(Products(5, 'RALPH LAUREN', 249.00))
+	db.session.add(Products(5, 'MASTERMIND WORLD Flannel Shirt', 99))
 	db.session.add(ProductResources(19, \
-	'https://a.allegroimg.com/s720/030ef9/af95c64f4dc48c75c2e7f8a1cd20', \
-	'''Klasyczna, luźna koszula marki Polo Ralph Lauren
-Deseń w biało-niebieskie paski
-Fason Relaxed fit
-Zapinana z przodu na guziki w kolorze białym
-Na wysokości klatki piersiowej haftowane logo marki w granatowym kolorze
-Długie rękawy zakończone mankietami zapinanymi na dwa guziki
-Dół koszuli z widocznym lekkimi wycięciami po bokach
-Wykonana z wysokiej jakości materiału, bardzo delikatnego i przyjemnego w dotyku​ -100%  czysty len.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/12021566414669.9160137shirt2.jpg', \
+	'''MASTERMIND WORLD is the diffusion line of Masaaki Homma’s mastermind JAPAN; hailing the designers renowned technical prowess and individual style, each piece is expertly crafted with luxury details and a statement aesthetic for global appeal. '''))
 	
-	db.session.add(Products(5, 'ZARA KOSZULA W FALBANY', 43.00))
+	db.session.add(Products(5, 'Ovik Lite Shirt M', 180))
 	db.session.add(ProductResources(20, \
-	'https://9.allegroimg.com/s1440/0377e0/6541629e4deda1ef5561fad51979', \
-	'''Śliczna koszula w paski i haftowane kwiaty ZARA z serii Kids.
-Koszula na 164cm, wypada jak damskie XS/S.
-Wykonana z mieszanki bawełny i poliestru, nie gniecie się.'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/54221566416318.333963shirt3.jpeg', \
+	'''Long-sleeved shirt in cool organic cotton chambray. Button-down collar, Comfort Fit and chest pockets with flaps.'''))
 	
-	db.session.add(Products(5, 'ZARA KOSZULA WIĄZANA', 45.00))
+	db.session.add(Products(5, 'Dark Blue and White Causal Shirt', 129))
 	db.session.add(ProductResources(21, \
-	'https://a.allegroimg.com/s720/03f387/b3d7b2e44fc99082a92052c6c440', \
-	'''ROZMIAR XS 34
-NOWA Z METKĄ
-SKŁAD: 100% WISKOZA'''))
+	'https://s3.eu-central-1.amazonaws.com/microservices.webshop/71981566417814.803331shirt4.jpg', \
+	'''Shirts is a cloth garment for the upper body. It is normally associated with long sleeves, a round neckline with collar. Shirts are generally made of a light, great quality fabric, and are easy to clean.'''))
