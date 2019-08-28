@@ -58,7 +58,6 @@
                     admin: false,
                     searchString: '',
                     showCollapse: false,
-                    //globalVar: 2,
                 };
             },
         mounted() {
@@ -134,10 +133,7 @@
                     this.$router.push({name: 'home', query: {search: this.searchString}});
                 }
             },
-            // changeCurrentPage() {
-            //     this.globalVar = 1;
-            //     this.$router.push({name: 'home', pageNumber: {pageNum: this.globalVar}});
-            // }
+
         }
     }
     ;
