@@ -28,68 +28,6 @@ def get_all_categories():
     return jsonify(responseData), 200
 
 
-# @views_blueprint.route('/admin/products/categories', methods=['POST'])
-# def add_product_category():
-#     if postData is None:
-#         errorMessage = 'Cannot find JSON object in request body!'
-#         return jsonify({'status': 'fail', 'message': errorMessage}), 400
-#
-#     if 'category_name' not in postData.keys():
-#         errorMessage = "Cannot find 'category_name' in request body!"
-#         return jsonify({'status': 'fail', 'message': errorMessage}), 400
-#
-#     category_name = postData['category_name']
-#     newCategory = Categories(category_name)
-#
-#     try:
-#         db.session.add(newCategory)
-#         db.session.commit()
-#         return jsonify({'status': 'success', 'message': 'New category added!'}), 200
-#     except IntegrityError as e:
-#         errorInfo = e.orig.args
-#         return jsonify({'status': 'fail', 'message': errorInfo[0]}), 409
-#
-#
-# @views_blueprint.route('/admin/products/categories/<int:category_id>', methods=['PUT'])
-# def change_category_name(category_id):
-#     requestJSON = request.json
-#
-#     if requestJSON is None:
-#         errorMessage = 'Cannot find JSON object in request body!'
-#         return jsonify({'status': 'fail', 'message': errorMessage}), 400
-#
-#     categoryToChange = Categories.query.get(category_id)
-#     if categoryToChange is None:
-#         return jsonify({'status': 'fail', 'message': "Category doesn't exist!"}), 404
-#
-#     if 'category_name' not in requestJSON.keys():
-#         errorMessage = "Cannot find 'category_name' in request body!"
-#         return jsonify({'status': 'fail', 'message': errorMessage}), 400
-#
-#     try:
-#         categoryToChange.name = requestJSON['category_name']
-#         db.session.commit()
-#         return jsonify({'status': 'success', 'message': 'Changed category name!'}), 200
-#     except IntegrityError as e:
-#         errorInfo = e.orig.args
-#         return jsonify({'status': 'fail', 'message': errorInfo[0]}), 409
-#
-#
-# @views_blueprint.route('/admin/products/categories/<int:category_id>', methods=['DELETE'])
-# def remove_category(category_id):
-#     categoryToDelete = Categories.query.get(category_id)
-#     if categoryToDelete is None:
-#         return jsonify({'status': 'fail', 'message': "Category doesn't exist!"}), 404
-#
-#     try:
-#         db.session.delete(categoryToDelete)
-#         db.session.commit()
-#         return jsonify({'status': 'success', 'message': 'Category deleted!'}), 200
-#     except IntegrityError as e:
-#         errorInfo = e.orig.args
-#         return jsonify({'status': 'fail', 'message': errorInfo[0]}), 409
-
-
 @views_blueprint.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     product = Products.query.get(product_id)
@@ -115,8 +53,6 @@ def get_all_products():
             tempDict = makeProductDict(product)
             productList.append(tempDict)
         numberOfItems = products.total
-    #elif paginate:
-        #page = request.args.get('page', 1, type=int)
     elif query:
         page = request.args.get('page', 1, type=int)
         products = Products.query.filter(Products.name.contains(query)).all()
@@ -165,6 +101,7 @@ def get_all_products_in_category(category_name):
     responseData['numberOfItemsPerPage'] = itemsPerPage
 
     return jsonify(responseData), 200
+
 
 @views_blueprint.route('/admin/products/<int:category_id>', methods=['POST'])
 def add_new_product(category_id):
@@ -225,6 +162,7 @@ def add_new_product(category_id):
     else:
         errorMessage = 'Cannot find token!'
         return jsonify({'status': 'fail', 'message': errorMessage}), 400
+
 
 @views_blueprint.route('/admin/products/edit/<int:product_id>', methods=['POST'])
 def change_product_data(product_id):
@@ -366,3 +304,4 @@ def remove_all_products_from_category(category_id):
     else:
         errorMessage = 'Cannot find token!'
         return jsonify({'status': 'fail', 'message': errorMessage}), 400
+        
