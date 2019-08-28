@@ -4,6 +4,7 @@ import jwt
 from project import db
 from project.config import SECRET_KEY
 
+
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -15,6 +16,7 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
+
     def __init__(self, email, first_name, last_name, password, admin=False):
         self.email = email,
         self.first_name = first_name,
@@ -22,6 +24,7 @@ class User(db.Model):
         self.password = password
         self.registered_on = datetime.datetime.now()
         self.admin = admin
+
 
     def to_json(self):
         return {
@@ -33,10 +36,11 @@ class User(db.Model):
             'admin': self.admin,
         }
 
+
     def encode_auth_token(self, user_id, is_admin):
         try:
             payload = {
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30),
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
                 'iat': datetime.datetime.utcnow(),
                 'customer_id': user_id,
                 'is_admin': is_admin,

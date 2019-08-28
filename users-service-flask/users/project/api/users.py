@@ -50,6 +50,7 @@ class UserRegister(Resource):
             db.session.rollback()
             return response_object, 400
 
+
 class UsersToken(Resource):
     def get(self):
         auth_header = request.headers.get('Authorization')
@@ -95,8 +96,6 @@ class UsersToken(Resource):
                 'message': 'Jwt token not provided'
             }
             return response_object, 404
-
-
 
 
 class LoginAPI(Resource):
@@ -167,6 +166,7 @@ class LogoutAPI(Resource):
                 'message': 'Provide a valid auth token.'
             }
             return responseObject, 403
+
 
 class mailAPI(Resource):
     def post(self):
