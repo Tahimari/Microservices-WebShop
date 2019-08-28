@@ -283,7 +283,6 @@
                     });
             },
             getAllProducts(currentPage) {
-                //this.getProductCategories();
                 const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products?page=` + currentPage;
                 axios
                     .get(path)

@@ -48,7 +48,6 @@
                     const MAIL_URL = `${process.env.VUE_APP_USERS_SERVICE_URL}/mail`;
                     this.$http.post(MAIL_URL, newMail)
                         .then(function (response) {
-                            //this.alert = response.body.message;
                             var form = document.getElementById('contact-form');
                             form.reset();
                             window.eventBus.$emit('successMailSent', "Your mail has been sent!");
