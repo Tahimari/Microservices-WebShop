@@ -60,11 +60,9 @@
 
             window.eventBus.$on('successMailSent', data => {
                 this.$swal({
-                  position: 'top-end',
                   type: 'success',
+                  title: 'Success',
                   text: data,
-                  showConfirmButton: false,
-                  timer: 1500
               })
             });
 

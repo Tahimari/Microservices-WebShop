@@ -51,7 +51,7 @@
                             //this.alert = response.body.message;
                             var form = document.getElementById('contact-form');
                             form.reset();
-                            window.eventBus.$emit('successMailSent', response.body.message);
+                            window.eventBus.$emit('successMailSent', "Your mail has been sent!");
                         });
                     if (!isEventNull) {
                         e.preventDefault();
