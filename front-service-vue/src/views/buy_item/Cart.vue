@@ -30,7 +30,7 @@
                             </tr>
                     </tbody>
                 </table>
-                <h4 align="right" class="display-5"> Total: {{ fixFloat(total_price) }} zł</h4>
+                <h4 align="right" class="display-5"> Total: {{ fixFloat(total_price) }} PLN</h4>
             </div>
             <b-jumbotron v-else>
                 <h2 align="center" class="display-3"> Empty cart </h2>

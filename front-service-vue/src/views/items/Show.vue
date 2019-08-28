@@ -16,10 +16,10 @@
                 <div class="col-md">
                     <p>{{ product.name }}</p>
                     <p style="white-space: pre-line">{{ product.resources.product_description }}</p>
-                    <p>Cena: {{ product.price }} zł</p>
+                    <p>Price: {{ product.price }} PLN</p>
                     <div v-if="token">
                         <b-form-group id="form-quantity-group">
-                            Ile sztuk: {{ quantity }}
+                            How many: {{ quantity }}
                             <b-form-input id="form-quantity-input" type="range" step="1" min="1" max="20"
                                           v-model="quantity">
                             </b-form-input>
@@ -29,7 +29,7 @@
                         </button>
                     </div>
                     <div v-if="!token">
-                        <b-alert variant="warning" show> Zaloguj się, aby dodać do koszyka!</b-alert>
+                        <b-alert variant="warning" show> Log in to add product to the cart!</b-alert>
                     </div>
                 </div>
             </div>
@@ -38,8 +38,8 @@
                 <!-- Modal content -->
                 <img :src="product.resources.picture_file_url" width="200">
                 <p>{{ product.name }}</p>
-                <p>Cena: {{ product.price }}zł</p>
-                <p>Ile sztuk: {{ quantity }}</p>
+                <p>Price: {{ product.price }}PLN</p>
+                <p>Quantity: {{ quantity }}</p>
                 <p>Product has been added to cart.</p>
                 <div class="modal-footer">
                     <b-button @click="$bvModal.hide('add-product-modal')">Back to shop</b-button>

@@ -95,6 +95,7 @@
                         localStorage.removeItem('token');
                         localStorage.removeItem('admin');
                         this.$router.push({path: '/', query: {alert: 'Logout'}});
+                        window.eventBus.$emit('successLog', 'You have been loged out !')
                     }, response => {
                         localStorage.removeItem('token');
                         this.token = '';
@@ -131,7 +132,8 @@
                 } else {
                     this.$router.push({name: 'home', query: {search: this.searchString}});
                 }
-            }
+            },
+
         }
     }
     ;

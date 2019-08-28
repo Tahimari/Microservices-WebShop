@@ -104,20 +104,39 @@ def get_product(product_id):
 
 @views_blueprint.route('/products', methods=['GET'])
 def get_all_products():
-    query = request.args.get('query');
-    if query:
-        products = Products.query.filter(Products.name.contains(query)).all()
-    else:
-        products = Products.query.all()
+    query = request.args.get('query')
+    paginate = request.args.get('paginate')
+    itemsPerPage = 9
     productList = []
-
-    for product in products:
-        tempDict = makeProductDict(product)
-        productList.append(tempDict)
+    if paginate:
+        page = request.args.get('page', 1, type=int)
+        products = Products.query.filter(Products.name.contains(query)).paginate(page=page, per_page=itemsPerPage)
+        for product in products.items:
+            tempDict = makeProductDict(product)
+            productList.append(tempDict)
+        numberOfItems = products.total
+    #elif paginate:
+        #page = request.args.get('page', 1, type=int)
+    elif query:
+        page = request.args.get('page', 1, type=int)
+        products = Products.query.filter(Products.name.contains(query)).all()
+        for product in products:
+            tempDict = makeProductDict(product)
+            productList.append(tempDict)
+        numberOfItems = len(products)
+    else:
+        page = request.args.get('page', 1, type=int)
+        products = Products.query.paginate(page=page, per_page=itemsPerPage)
+        for product in products.items:
+            tempDict = makeProductDict(product)
+            productList.append(tempDict)
+        numberOfItems = products.total
 
     responseData = {}
     responseData['status'] = 'success'
     responseData['data'] = productList
+    responseData['allItemsQuantity'] = numberOfItems
+    responseData['numberOfItemsPerPage'] = itemsPerPage
 
     return jsonify(responseData), 200
 
@@ -125,20 +144,25 @@ def get_all_products():
 @views_blueprint.route('/products/<string:category_name>', methods=['GET'])
 def get_all_products_in_category(category_name):
     category = Categories.query.filter_by(name=category_name).first()
-
+    itemsPerPage = 9
     if category is None:
         return jsonify({'status': 'fail', 'message': "Category doesn't exist!"}), 404
 
-    products = Products.query.filter_by(category_id=category.id).all()
+    page = request.args.get('page', 1, type=int)
+    products = Products.query.filter_by(category_id=category.id).paginate(page=page, per_page=itemsPerPage)
     productList = []
 
-    for product in products:
+    for product in products.items:
         tempDict = makeProductDict(product)
         productList.append(tempDict)
+
+    numberOfItems = products.total
 
     responseData = {}
     responseData['status'] = 'success'
     responseData['data'] = productList
+    responseData['allItemsQuantity'] = numberOfItems
+    responseData['numberOfItemsPerPage'] = itemsPerPage
 
     return jsonify(responseData), 200
 

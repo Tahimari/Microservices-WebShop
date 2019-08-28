@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <notifications group="foo" :classes="notificationClasses" />
         <div id="nav">
+            <notifications group="adminAlerts" :classes="notificationClasses" />
             <Navbar/>
         </div>
         <div class="content">
@@ -19,55 +19,46 @@
         name: "App",
         components: {
             Navbar,
-            Footer
+            Footer,
         },
         created () {
-            window.eventBus.$on('successProductAdded', data => {
+            window.eventBus.$on('successProductRelated', data => {
                 this.notificationClasses = 'vue-notification success'
                 this.$notify({
-                  group: 'foo',
+                  group: 'adminAlerts',
                   title: 'Success',
                   text: data
                 });
             });
 
-            window.eventBus.$on('errorProductNotAdded', data => {
+            window.eventBus.$on('errorProductRelated', data => {
                 this.notificationClasses = 'vue-notification error'
                 this.$notify({
-                  group: 'foo',
-                  title: 'Error',
-                  text: data
-                });
-            });
-
-            // window.eventBus.$on('successProductEdited', data => {
-            //     //this.$swal('Heading', data, 'OK');
-            //     this.$swal({
-            //       type: 'success',
-            //       title: 'Oops...',
-            //       text: 'Something went wrong!',
-            //   })
-            // });
-
-            window.eventBus.$on('successProductEdited', data => {
-                this.notificationClasses = 'vue-notification success'
-                this.$notify({
-                  group: 'foo',
-                  title: 'Success',
-                  text: data
-                });
-            });
-
-            window.eventBus.$on('errorProductNotEdited', data => {
-                this.notificationClasses = 'vue-notification error'
-                this.$notify({
-                  group: 'foo',
+                  group: 'adminAlerts',
                   title: 'Error',
                   text: data
                 });
             });
 
             window.eventBus.$on('successOrderCompleted', data => {
+                this.$swal({
+                  type: 'success',
+                  title: 'Success',
+                  text: data,
+              })
+            });
+
+            window.eventBus.$on('successLog', data => {
+                this.$swal({
+                  position: 'top-end',
+                  type: 'success',
+                  text: data,
+                  showConfirmButton: false,
+                  timer: 1500
+              })
+            });
+
+            window.eventBus.$on('successMailSent', data => {
                 this.$swal({
                   type: 'success',
                   title: 'Success',
