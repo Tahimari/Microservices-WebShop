@@ -29,7 +29,6 @@ def recreate_db():
 
 @cli.command()
 def test():
-    """Runs the tests without code coverage"""
     tests = unittest.TestLoader().discover('project/tests', pattern='test*.py')
     result = unittest.TextTestRunner(verbosity=2).run(tests)
     if result.wasSuccessful():
@@ -38,7 +37,6 @@ def test():
 
 @cli.command('seed_db')
 def seed_db():
-    """Seeds the database."""
     db.session.add(User(email="hermanmu@gmail.com", first_name='asdasd', last_name='Bca123', password='Abc123'))
     db.session.add(User(email="asdasd@gmail.com", first_name='qweqwe', last_name='qwqweqwe', password='qweqweqw'))
     db.session.add(User(email="kamilm215@gmail.com", first_name='Kamil', last_name='Misiak', password='qwe123', admin=1))
@@ -47,7 +45,6 @@ def seed_db():
 
 @cli.command()
 def cov():
-    """Runs the unit tests with coverage."""
     tests = unittest.TestLoader().discover('project/tests')
     result = unittest.TextTestRunner(verbosity=2).run(tests)
     if result.wasSuccessful():

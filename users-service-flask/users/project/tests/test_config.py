@@ -30,7 +30,6 @@ class TestTestingConfig(TestCase):
         return app
 
     def test_app_is_testing(self):
-        #self.assertFalse(app.config['SECRET_KEY'] is 'my_precious')
         self.assertTrue(app.config['TESTING'])
         self.assertFalse(app.config['PRESERVE_CONTEXT_ON_EXCEPTION'])
         self.assertTrue(
