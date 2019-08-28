@@ -21,16 +21,10 @@ def prepare_database():
 	db.session.add(ShipmentStates(2, "Cancelled"))
 	
 	# Add shipment types
-	db.session.add(ShipmentTypes("Paczkomat 24/7", 12.99, 3, \
-	"Paczkomaty to system skrytek pocztowych, ustawionych w różnych miejscach " \
-	"na terenie całego kraju, podobnych w obsłudze do bankomatów, w których " \
-	"możliwy jest odbiór przesyłki o dowolnej, dogodnej dla adresata porze, " \
-	"24 godziny na dobę przez 7 dni w tygodniu."))
-	db.session.add(ShipmentTypes("Przysyłka kurierska", 18.99, 2))
-	db.session.add(ShipmentTypes("Odbiór osobisty", 0, 0, "Odbiór w siedzibie sklepu"))
-	db.session.add(ShipmentTypes("Paczka za pobraniem", 29.99, 5, "Płatność przy odbiorze"))
-	
-	# Commit transaction
+	db.session.add(ShipmentTypes("Curier DPD", 12.99, 3, "Delivery with DPD courier"))
+	db.session.add(ShipmentTypes("DHL Curier", 18.99, 2))
+	db.session.add(ShipmentTypes("DHL COD parcel", 29.99, 5, "Parcel Cash on Delivery"))
+	db.session.add(ShipmentTypes("Personal pickup", 0, 0, "Personal pickup in store"))
 	db.session.commit()
 
 def decodeToken(token, public_key, encodingAlgorithm):
