@@ -18,7 +18,7 @@
                     <b-navbar-nav>
                         <b-nav-item to="/">Home</b-nav-item>
                         <b-nav-item-dropdown text="Categories" right>
-                            <b-dropdown-item v-on:click="currentPage = 1" to="/category/Shoes">Shoes</b-dropdown-item>
+                            <b-dropdown-item to="/category/Shoes">Shoes</b-dropdown-item>
                             <b-dropdown-item to="/category/T-Shirts">T-Shirts</b-dropdown-item>
                             <b-dropdown-item to="/category/Jackets">Jackets</b-dropdown-item>
                             <b-dropdown-item to="/category/Trousers">Trousers</b-dropdown-item>
@@ -58,6 +58,7 @@
                     admin: false,
                     searchString: '',
                     showCollapse: false,
+                    //globalVar: 2,
                 };
             },
         mounted() {
@@ -95,6 +96,7 @@
                         localStorage.removeItem('token');
                         localStorage.removeItem('admin');
                         this.$router.push({path: '/', query: {alert: 'Logout'}});
+                        window.eventBus.$emit('successLog', 'You have been loged out !')
                     }, response => {
                         localStorage.removeItem('token');
                         this.token = '';
@@ -131,7 +133,11 @@
                 } else {
                     this.$router.push({name: 'home', query: {search: this.searchString}});
                 }
-            }
+            },
+            // changeCurrentPage() {
+            //     this.globalVar = 1;
+            //     this.$router.push({name: 'home', pageNumber: {pageNum: this.globalVar}});
+            // }
         }
     }
     ;

@@ -48,7 +48,7 @@
             </tbody>
         </table>
 
-        <b-pagination size="md" align="center" :total-rows="100" v-model="currentPage" :per-page="9" @input="getAllProducts(currentPage)">
+        <b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="getAllProducts(currentPage)">
         </b-pagination>
 
         <p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
@@ -263,6 +263,8 @@
                 category_options: [],
                 file: "",
                 currentPage: 1,
+                numberOfItems: 0,
+                itemsPerPage: 0,
             };
         },
         methods: {
@@ -281,12 +283,14 @@
                     });
             },
             getAllProducts(currentPage) {
-                this.getProductCategories();
+                //this.getProductCategories();
                 const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products?page=` + currentPage;
                 axios
                     .get(path)
                     .then(res => {
                         this.products = res.data.data;
+                        this.numberOfItems = res.data.allItemsQuantity;
+                        this.itemsPerPage = res.data.numberOfItemsPerPage;
                     })
                     .catch(error => {
                         console.error(error);
@@ -320,12 +324,7 @@
                 if (allowedTypes.includes(file.type) && !tooLarge) {
                     return true;
                 } else {
-                    this.$notify({
-                      type: 'vue-notification error',
-                      group: 'foo',
-                      title: 'Error',
-                      text: "Wrong file type or size"
-                    });
+                    window.eventBus.$emit('errorProductRelated', 'Wrong file type or size')
                     return false;
                 }
             },
@@ -347,6 +346,7 @@
                         .then(res => {
                             this.products = this.products.filter(obj => obj.id !== product_id);
                             this.selectedProduct = {};
+                            window.eventBus.$emit('successProductRelated', 'The product was deleted')
                         })
                         .catch(error => {
                             console.error(error);
@@ -379,12 +379,12 @@
 
                         .then(() => {
                             this.getAllProducts();
-                            window.eventBus.$emit('successProductEdited', 'The product was edited')
+                            window.eventBus.$emit('successProductRelated', 'The product was edited')
                         })
                         .catch(error => {
                             console.error(error);
                             this.getAllProducts();
-                            window.eventBus.$emit('errorProductNotEdited', 'The product was not edited. Try again')
+                            window.eventBus.$emit('errorProductRelated', 'The product was not edited. Try again')
                         });
                 }
             },
@@ -415,12 +415,12 @@
                         .post(PRODUCT_URL, formData, {headers: headers})
                         .then(() => {
                             this.getAllProducts();
-                            window.eventBus.$emit('successProductAdded', 'The product is added')
+                            window.eventBus.$emit('successProductRelated', 'The product is added')
                         })
                         .catch(error => {
                             console.error(error);
                             this.getAllProducts();
-                            window.eventBus.$emit('errorProductNotAdded', 'The product is not added. Try again.')
+                            window.eventBus.$emit('errorProductRelated', 'The product is not added. Try again.')
                         });
                 }
             },
@@ -431,10 +431,11 @@
                 this.addProductForm.picture_file_url = "";
                 this.addProductForm.description = "";
                 this.file = "";
-            }
+            },
         },
         created() {
             this.getAllProducts();
+            this.getProductCategories();
         },
         mounted(currentPage){
             this.getAllProducts(currentPage)

@@ -44,6 +44,7 @@
                             localStorage.setItem('token', response.body.token);
                             localStorage.setItem('admin', response.body.admin);
                             this.$router.push({path: '/', query: {alert: 'Login'}});
+                            window.eventBus.$emit('successLog', 'You are loged in !')
                         }, response => {
                             this.alert = response.body.message;
                         });

@@ -10,7 +10,7 @@
 			</h1>
 			<hr>
 			<div class="row">
-				<div class="col" v-for="product in products">
+				<div class="col-sm-4" v-for="product in products">
 					<a :href="`/show/${product.id}`">
 						<img :src="product.resources.picture_file_url" width="300" height="300">
 						<p>{{ product.name }}</p>
@@ -20,13 +20,18 @@
 			</div>
 
 
-        	<div v-if="category === ''">
-			  	<b-pagination size="md" align="center" :total-rows="100" v-model="currentPage" :per-page="9" @input="getAllProducts(currentPage)">
+			<div v-if="this.$route.query.search">
+				<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="getProductsFilteredByQuery(queryStringTemp, currentPage)">
+        		</b-pagination>
+        		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
+			</div>
+        	<div v-else-if="category === ''">
+			  	<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="getAllProducts(currentPage)">
         		</b-pagination>
         		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
 			</div>
 			<div v-else>
-			  	<b-pagination size="md" align="center" :total-rows="100" v-model="currentPage" :per-page="9" @input="getProductsFromCategory(category)">
+			  	<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="getProductsFromCategory(category)">
         		</b-pagination>
         		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
 			</div>
@@ -49,15 +54,21 @@ export default {
 			products: [],
 			category: '',
 	      	currentPage: 1,
-		}
+	      	numberOfItems: 0,
+	      	itemsPerPage: 0,
+	      	paginate: 'a',	
+	      	queryStringTemp: '',	
+	      }
 	},
 	watch:{
 		$route (){
 			this.loadProducts();
+			this.currentPage = 1;
 		}
 	}, 
 	methods: {
 		getAllProducts(currentPage) {
+			//currentPage = this.$route.pageNumber.pageNum
 			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products?page=` + this.currentPage;
 			this.sendGetRequest(path, false);
 			window.scrollTo({
@@ -69,9 +80,12 @@ export default {
 			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products/${categoryName}?page=` + this.currentPage;
 			this.sendGetRequest(path, true);
 		},
-		getProductsFilteredByQuery(queryString) {
+		getProductsFilteredByQuery(queryString, currentPage) {
 			queryString = queryString.toLowerCase();
-			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products`;
+			if(this.$route.query.search)
+				this.queryStringTemp = this.$route.query.search
+			
+			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products?&query=${encodeURI(this.queryStringTemp)}&paginate=${encodeURI(this.paginate)}&page=` +this.currentPage;
 			axios.get(path)
 			.then((res) => {
 				let tempInputProducts = res.data.data;
@@ -86,6 +100,8 @@ export default {
 				}
 				this.products = tempOutputProducts;
 				this.category = '';
+				this.numberOfItems= res.data.allItemsQuantity;
+                this.itemsPerPage = res.data.numberOfItemsPerPage;
 			})
 			.catch((error) => {
 				// eslint-disable-next-line
@@ -96,6 +112,8 @@ export default {
 			axios.get(path)
 			.then((res) => {
 				this.products = res.data.data;
+				this.numberOfItems= res.data.allItemsQuantity;
+                this.itemsPerPage = res.data.numberOfItemsPerPage;
 				if (wasCategorySelected) {
 					this.category = this.products[0].category.name;
 				} else {
@@ -113,11 +131,14 @@ export default {
 				this.getProductsFromCategory(categoryName);
 			} else if (this.$route.query.search) {
 				let queryString = this.$route.query.search;
-				this.getProductsFilteredByQuery(queryString);
+				if(this.$route.query.search)
+					this.getProductsFilteredByQuery(queryString);
+				else
+					this.getProductsFilteredByQuery(queryStringTemp);
 			} else {
 				this.getAllProducts();
 			}
-		}
+		},
 	},
 	created() {
 		this.loadProducts();
