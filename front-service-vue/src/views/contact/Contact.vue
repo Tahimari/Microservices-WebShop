@@ -2,7 +2,7 @@
     <div class="add container">
         <b-jumbotron header="Contact Us">
             <Alert v-if="alert" v-bind:message="alert"/>
-            <b-form class="w-100" @submit="sendMail" method="post">
+            <b-form id="contact-form" class="w-100" @submit="sendMail" method="post">
                 <b-form-group id="form-email-group" label="Email:" label-for="form-email-input">
                     <b-form-input id="form-email-input" v-model="mail.email" name="Email" type="email" required
                                   autofocus placeholder="Your email">
@@ -48,7 +48,10 @@
                     const MAIL_URL = `${process.env.VUE_APP_USERS_SERVICE_URL}/mail`;
                     this.$http.post(MAIL_URL, newMail)
                         .then(function (response) {
-                            this.alert = response.body.message;
+                            //this.alert = response.body.message;
+                            var form = document.getElementById('contact-form');
+                            form.reset();
+                            window.eventBus.$emit('successMailSent', response.body.message);
                         });
                     if (!isEventNull) {
                         e.preventDefault();

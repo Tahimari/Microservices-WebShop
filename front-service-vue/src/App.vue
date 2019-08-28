@@ -58,6 +58,16 @@
               })
             });
 
+            window.eventBus.$on('successMailSent', data => {
+                this.$swal({
+                  position: 'top-end',
+                  type: 'success',
+                  text: data,
+                  showConfirmButton: false,
+                  timer: 1500
+              })
+            });
+
         },
         data () {
             return {

@@ -63,7 +63,7 @@
                     @submit="onAddSubmit"
                     @reset="
           hideModal('add-product-dialog');
-          clearAddFormObject();
+          clearFormObject();
         "
                     class="w-100"
                     enctype="multipart/form-data"
@@ -399,7 +399,7 @@
                     formData.append("product_description", this.addProductForm.description);
                     this.addProduct(categoryID, formData);
                     this.hideModal("add-product-dialog");
-                    this.clearAddFormObject();
+                    this.clearFormObject();
                 }
             },
             addProduct(categoryID, formData) {

@@ -20,22 +20,12 @@
 			</div>
 
 
-			<div v-if="this.$route.query.search">
+			<div>
 				<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="loadProducts()">
         		</b-pagination>
         		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
 			</div>
-        	<div v-else-if="category === ''">
-			  	<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="loadProducts()">
-        		</b-pagination>
-        		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
-			</div>
-			<div v-else>
-			  	<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="loadProducts()">
-        		</b-pagination>
-        		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
-			</div>
-
+        	
 
 		</div>
 		<div v-else>
