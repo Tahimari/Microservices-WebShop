@@ -21,17 +21,17 @@
 
 
 			<div v-if="this.$route.query.search">
-				<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="getProductsFilteredByQuery(queryStringTemp, currentPage)">
+				<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="loadProducts()">
         		</b-pagination>
         		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
 			</div>
         	<div v-else-if="category === ''">
-			  	<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="getAllProducts(currentPage)">
+			  	<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="loadProducts()">
         		</b-pagination>
         		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
 			</div>
 			<div v-else>
-			  	<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="getProductsFromCategory(category)">
+			  	<b-pagination size="md" align="center" :total-rows="numberOfItems" v-model="currentPage" :per-page="itemsPerPage" @input="loadProducts()">
         		</b-pagination>
         		<p class="mt-3" align="center">Current Page: {{ currentPage }}</p>
 			</div>
@@ -62,13 +62,12 @@ export default {
 	},
 	watch:{
 		$route (){
-			this.loadProducts();
 			this.currentPage = 1;
+			this.loadProducts();
 		}
 	}, 
 	methods: {
 		getAllProducts(currentPage) {
-			//currentPage = this.$route.pageNumber.pageNum
 			const path = `${process.env.VUE_APP_PRODUCTS_SERVICE_URL}/products?page=` + this.currentPage;
 			this.sendGetRequest(path, false);
 			window.scrollTo({
