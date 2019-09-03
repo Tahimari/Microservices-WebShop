@@ -10,9 +10,9 @@
 			</h1>
 			<hr>
 			<div class="row">
-				<div class="col-sm-4" v-for="product in products">
+				<div class="col-sm-6 col-md-4" v-for="product in products">
 					<a :href="`/show/${product.id}`">
-						<img :src="product.resources.picture_file_url" width="300" height="300">
+						<img class="img-fluid" :src="product.resources.picture_file_url" >
 						<p>{{ product.name }}</p>
 					</a>
 					<p>{{ product.price }} zł</p>	
